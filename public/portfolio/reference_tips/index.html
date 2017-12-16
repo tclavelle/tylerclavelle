@@ -7,14 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="all,follow">
 <meta name="googlebot" content="index,follow,snippet,archive">
-<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://friendly-sammet-d07984.netlify.com/css/bootstrap.min.css">
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-<link rel="stylesheet" href="/css/owl.carousel.css">
-<link rel="stylesheet" href="/css/owl.theme.css">
+<link rel="stylesheet" href="https://friendly-sammet-d07984.netlify.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://friendly-sammet-d07984.netlify.com/css/owl.carousel.css">
+<link rel="stylesheet" href="https://friendly-sammet-d07984.netlify.com/css/owl.theme.css">
 
 
-  <link href="/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+  <link href="https://friendly-sammet-d07984.netlify.com/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
 
  
 
@@ -26,8 +26,8 @@
   
 
 
-<link href="/css/custom.css" rel="stylesheet">
-<link rel="shortcut icon" href="/img/favicon.png">
+<link href="https://friendly-sammet-d07984.netlify.com/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="https://friendly-sammet-d07984.netlify.com/img/favicon.png">
 
 
 </head>
@@ -46,11 +46,11 @@
     <ul class="sidebar-menu">
       
       
-        <li><a href="/">Home</a></li>
+        <li><a href="https://friendly-sammet-d07984.netlify.com/">Home</a></li>
       
-        <li><a href="/about/">About</a></li>
+        <li><a href="https://friendly-sammet-d07984.netlify.com/about/">About</a></li>
       
-        <li><a href="/contact/">Get in touch</a></li>
+        <li><a href="https://friendly-sammet-d07984.netlify.com/contact/">Get in touch</a></li>
       
     </ul>
     <p class="social">
@@ -145,7 +145,7 @@ library(RefManageR)</code></pre>
 <p>For this example, we’ll link to my collection of articles about interactions between aquaculture (fish farming) and wild fisheries. The <code>collection</code> id is just the last character set after <code>collectionKey/</code> at the end of the collection’s URL.</p>
 <p>With the <code>user</code> id and <code>collection</code> id, we can connect to Zotero directly to get our reference information using the <code>ReadZotero()</code> function.</p>
 <pre class="r"><code>biblio &lt;- ReadZotero(user = &lt;user_id&gt;, .params = list(collection = &#39;&lt;collection_id&gt;&#39;))</code></pre>
-<p><code>ReadZotero()</code> will return a list of references, which I’ve called <code>biblio</code> here. At this point, we can start directly inserting citations in our RMarkdown document using <code>Cite()</code> and providing the index for the reference in <code>biblio</code> we want to cite. For example, <code>Cite(biblio[[1]])</code> will insert a citation for the first reference in our reference list - (Mikkelsen, 2006).</p>
+<p><code>ReadZotero()</code> will return a list of references, which I’ve called <code>biblio</code> here. At this point, we can start directly inserting citations in our RMarkdown document using <code>Cite()</code> and providing the index for the reference in <code>biblio</code> we want to cite. For example, <code>Cite(biblio[[1]])</code> will insert a citation for the first reference in our reference list - (Hoagland, Jin, and Kite-Powell, 2003).</p>
 <p><code>ReadZotero()</code> names each list index using an informative key string and we can make a look-up data frame with the reference titles and list element names to make indexing easier.</p>
 <pre class="r"><code># Find article keys to reference when in citations
 refs &lt;- biblio %&gt;% {
@@ -170,7 +170,7 @@ refs &lt;- biblio %&gt;% {
 <p><strong>References</strong></p>
 <p>[1] FAO, ed. <em>Contributing to food security and nutrition for all</em>. Eng. The state of world fisheries and aquaculture 2016. OCLC: 957090850. Rome: Food and Agriculture Organization of the United Nations, 2016. ISBN: 978-92-5-109185-2.</p>
 <p>[2] N. Hishamunda, N. B. Ridler, P. Bueno, et al. “Commercial aquaculture in Southeast Asia: Some policy lessons”. In: <em>Food Policy</em>. Collective Action for Smallholder Market Access 34.1 (Feb. 2009), pp. 102-107. ISSN: 0306-9192. DOI: 10.1016/j.foodpol.2008.06.006. &lt;URL: <a href="http://www.sciencedirect.com/science/article/pii/S0306919208000584" class="uri">http://www.sciencedirect.com/science/article/pii/S0306919208000584</a>&gt;.</p>
-<p>[3] E. Mikkelsen. “Aquaculture-Fisheries Interactions”. En. In: <em>Marine Resource Economics</em> (Nov. 2006). &lt;URL: <a href="http://ir.library.oregonstate.edu/xmlui/handle/1957/43208" class="uri">http://ir.library.oregonstate.edu/xmlui/handle/1957/43208</a>&gt;.</p>
+<p>[3] P. Hoagland, D. Jin and H. Kite-Powell. “The Optimal Allocation of Ocean Space: Aquaculture and Wild-Harvest Fisheries”. In: <em>Marine Resource Economics</em> 18.2 (Jan. 2003), pp. 129-147. ISSN: 0738-1360. &lt;URL: <a href="http://www.jstor.org/stable/42629389" class="uri">http://www.jstor.org/stable/42629389</a>&gt;.</p>
 <p>[4] R. Subasinghe, D. Soto and J. Jia. “Global aquaculture and its role in sustainable development”. En. In: <em>Reviews in Aquaculture</em> 1.1 (Mar. 2009), pp. 2-9. ISSN: 1753-5131. DOI: 10.1111/j.1753-5131.2008.01002.x. &lt;URL: <a href="http://onlinelibrary.wiley.com/doi/10.1111/j.1753-5131.2008.01002.x/abstract" class="uri">http://onlinelibrary.wiley.com/doi/10.1111/j.1753-5131.2008.01002.x/abstract</a>&gt;.</p>
 <p>That’s it, we’re all setup and ready to start writing and citing our way to publication glory!</p>
 </div>
@@ -184,15 +184,15 @@ refs &lt;- biblio %&gt;% {
           </div>
       </div>
   </div>
-  <script src="/js/jquery.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery.cookie.js"> </script>
-<script src="/js/ekko-lightbox.js"></script>
-<script src="/js/jquery.scrollTo.min.js"></script>
-<script src="/js/masonry.pkgd.min.js"></script>
-<script src="/js/imagesloaded.pkgd.min.js"></script>
-<script src="/js/owl.carousel.min.js"></script>
-<script src="/js/front.js"></script>
+  <script src="https://friendly-sammet-d07984.netlify.com/js/jquery.min.js"></script>
+<script src="https://friendly-sammet-d07984.netlify.com/js/bootstrap.min.js"></script>
+<script src="https://friendly-sammet-d07984.netlify.com/js/jquery.cookie.js"> </script>
+<script src="https://friendly-sammet-d07984.netlify.com/js/ekko-lightbox.js"></script>
+<script src="https://friendly-sammet-d07984.netlify.com/js/jquery.scrollTo.min.js"></script>
+<script src="https://friendly-sammet-d07984.netlify.com/js/masonry.pkgd.min.js"></script>
+<script src="https://friendly-sammet-d07984.netlify.com/js/imagesloaded.pkgd.min.js"></script>
+<script src="https://friendly-sammet-d07984.netlify.com/js/owl.carousel.min.js"></script>
+<script src="https://friendly-sammet-d07984.netlify.com/js/front.js"></script>
 
 </body>
 </html>
