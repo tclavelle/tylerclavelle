@@ -1,0 +1,141 @@
+---
+date: 2017-01-23T16:17:35-08:00
+title: "Building a Blog with Blogdown and GitHub"
+image: "img/portfolio/collabocats.jpg"
+showonlyimage: false
+---
+
+When I first started learning to code in R, Google was (and still is) my go-to when I had a question. It didn't take long to realize that this generally brought me to one of two destinations - StackOverflow or [Insert Name]'s Blog. So, I created a StackOverflow account and decided to start my own data science blog. However, I didn't quite know where to start and spent most of 2016 scoping different platforms. While I won't go into all the details of this process, the cliff notes are as follows:
+
++ Tried Jekyll. The installation and dependencies (e.g. Ruby) were more complicated than I wanted and I was hoping for a more direct integration of R into the workflow
++ Created a website with RMarkdown. Getting setup was a breeze but found the blogging capability to be lacking
+
+Enter [blogdown](https://github.com/rstudio/blogdown), the new brainchild of Yihui Xi. Though still in the early beta stage, blogdown checked all the boxes I was looking for. So, now that i'm up and running, it felt only natural to write my first blog post about how to get started blogging with `blogdown`. [Blogdown](https://github.com/rstudio/blogdown) is a R package that combines the ease of [RMarkdown](http://rmarkdown.rstudio.com) with the flexibility and customizability of [Hugo](https://gohugo.io). Hugo is an open-source static site generator similar to Jekyll, which means it builds your website once rather than each time a user visits it by taking all files within the website's directory and rendering a complete website.
+
+## Hosting Your Blog With GitHub
+Before I jump in to explaining how to use `blogdown`, I want to first explain my approach to hosting my blog on GitHub, as it is important for the remainder of this post. User pages on GitHub require all site content (and only site content) to be on the `master` branch. This is problematic for `blogdown` sites because when Hugo builds your website it places the site content in a new folder called `public/`. Thus, your blog's source and site content will be on the `master` branch and GitHub will be unable to render your site. So far I've seen two options for getting around this issue:  
+
+1. **Two branches (and a subbranch) -** Remove all source content from the `master` branch and place it in a new branch, using a `subbranch` to mirror the `public/` folder on the new branch to the `master` branch. While this method allows you to store all your content in the same repo, it's rather confusing to set up if you're not a GitHub ninja.   
+
+2. **Two repositories -** Create a repo to store your source content and tell `blogdown` to publish the site to your `username.github.io` repository each time you build your site. Though this approach is less streamlined than the two-branch method, the only real added hassle is remembering to push an additional repository to GitHub.
+
+After initial partly-successful attempts to use the two-branch method, I decided to keep it simple and use the two repository method for my site. If you decide to go the two-branch route, see [this](https://proquestionasker.github.io/blog/Making_Site/) great post by Amber Thomas (which was my primary resource) and [this](https://hjdskes.github.io/blog/deploying-hugo-on-personal-gh-pages/index.html) post by Jente Hidskes. 
+
+## Creating Your Blog
+Ok, now that we've decided to use the two repository method to host our site, let's get started making a blog with `blogdown`. 
+
+### Create a GitHub Repository
+1. First, create a new repository for your blogdown source content. Initialize the repository with a `README.md` file.   
+
+```{r echo = FALSE, fig.align = "center", out.width='100%'}
+knitr::include_graphics("../img/create_repo.png")
+```
+
+2. Next, click the green `clone or download` button on the right side of your new repo's page and copy the URL.
+
+```{r echo = FALSE, fig.align = "center", out.width='100%'}
+knitr::include_graphics("../img/clone_repo.png")
+```
+
+3. Open up Terminal and use `cd <desired directory>` to navigate to the directory where you'd like your new repository to live. I keep all my repos in a `GitHub/` folder on my desktop, so I'll put the repository there. After navigating to the desired directory, run `git clone <GitHub URL>` to clone the new repository. 
+
+```{r echo = FALSE, fig.align = "center"}
+knitr::include_graphics("../img/terminal_clone.png")
+```
+
+4. Open up *Finder*; you should now see the `blogdown_source/` folder containing only the `README.md` file. Now that you've successfully cloned the repo, delete the `README.md` file. Don't add anything else to this folder just yet, `blogdown` requires an empty directory to get started.
+
+5. If you don't already have a repository setup for your **<username>.github.io** page, repeat steps 1-3 above and create that repo now as well. Later on in the setup process we'll tell Hugo to publish our new site to this directory. 
+
+### Installing Hugo
+A great feature of `blogdown` is that it handles the installation of Hugo for you, which means you don't need to know much about Hugo to start blogging with `blogdown`. I found this to be a big advantage over the complicated dependencies and installation process of Jekyll. 
+
+6. Load the `blogdown` package and run the `install_hugo()` command. This can just be done in the console.
+```{r, echo=TRUE, eval=FALSE}
+# Load blogdown package and install Hugo
+library(blogdown)
+install_hugo()
+```
+
+Doesn't get much more straight forward than that.
+
+### Build Your Site with Blogdown
+Like `install_hugo()`, blogdown provides the handy `new_site()` function to automatically create the required structure for you website in the (empty) directory you specify. 
+
+Another great feature of this function is that you can use the `theme` argument to specify the theme you want for your website and `blogdown` will download all necessary files into the new site directory it creates. Check out Hugo's [theme](http://themes.gohugo.io) gallery for a ton of options. Let's try the [Tranquilpeak theme](http://themes.gohugo.io/hugo-tranquilpeak-theme/) theme, which we specify with `theme = 'kakawait/hugo-tranquilpeak-theme'`, which is just the GitHub user and repo name for the theme. We'll also set the `format` argument to `format = 'toml'` to tell `blogdown` that we want to use **toml** for our site's `config` file. `toml` is actually the default setting but I wanted to point it out because the `config.toml` is important for customizing your website. Once you select a theme for your site, checkout the GitHub repo for the theme and determine whether the `theme` file is a `.toml` or `.yaml` file and set the `format` argument accordingly. 
+
+```{r, echo=TRUE, eval=FALSE}
+# Create new site in our recently cloned blogdown repository
+new_site(dir = 'blogdown_source', 
+         theme = 'kakawait/hugo-tranquilpeak-theme',
+         format = 'toml')
+```
+
+A few things happen upon running the above code:   
+
+1. `blogdown` will add all the required Hugo components to the previously empty directory, displaying the progress in your R console  
+  
+2. An example RMarkdown `post` will be created and opened automatically  
+  
+3. RStudio will start serving your site in the RStudio viewer, which you can open in your web browser by clicking on the arrow button next to the broom
+
+```{r echo = FALSE, fig.align = "center", out.width='100%'}
+knitr::include_graphics("../img/new_site_serve.png")
+```
+
+Congratulations! You now have a functioning website created with `blogdown`! However, before you're ready to publish your site and start and writing blog posts, let's first understand a bit more about how Hugo and `blogdown` work together to organize and build your site.
+
+## Site Structure
+Open up your repository folder. You should see a bunch of new folders and files, including for the theme you told `blogdown` to use for your website and the demo RMarkdown post in the `blogdown/post/` directory. 
+
+```{r echo = FALSE, fig.align = "center", out.width='80%'}
+knitr::include_graphics("../img/repo_structure.png")
+```
+
+While you should definitely see [Hugo's documentation](https://gohugo.io/overview/source-directory/) for details on the purpose of these directories, I'll explain the key elements you need to understand to get started with `blogdown`.
+
++ [config.toml](https://gohugo.io/overview/configuration/) - The configuration file for your website. This file tells Hugo how it should render your site, as well as define its menus, and set various other site-wide parameters. This file will look different for every theme, but they will all contain some basic components.  
+    - `baseurl` set this to the desired URL for your site, in this case `baseurl = "https://<usernamr>.github.io/"`
+    - `title` set the title for your new site. Some completely random and objective examples include "Real Leaks, Fake News", "Gravy Fries and Putin", and "Kellyanne's Alternative Factory"
+    - `description` a brief description or mission of your new site, something like "Democracy Described in Data" or "Hair and Imbalanced"
+    - `theme` this should list the theme you specified when creating the site  
+    - `publishDir` tell `blogdown` which directory it should place the rendered site in. This directory will include a copy of everything that gets generated in the `public/` directory of your site's root directory. To use the **two repository** method described above, set this to `publishDir = "../<username>.github.io"`. Adjust this path to where ever you keep your `<username>.github.io` repository
++ `public/` - The directory where Hugo will place your rendered website content. The contents of the `public/` directory are the only things that can be present on the `master` branch of your *username.github.io* page in order for GitHub to render the site properly. This creates the need to use the **two branch** or **two repository** approaches
++ [themes/](https://gohugo.io/themes/overview/) - User generated themes powered by the Go template library. You should see a folder with the name of the theme you chose previously
+    - [themes/layout/](https://gohugo.io/templates/overview/) - HTML templates that the Hugo theme uses to structure the layout of each page on your website. There are three primary layout types - **single** (for single-content pages), **list** (for pages with multiple pieces of content), and **homepage** (any guesses?). Checkout this [Hugo documentation](http://gohugo.io/templates/go-templates/) for an intro to using and creating these layout templates  
++ [content/](https://gohugo.io/content/organization/) - The main directory where your blog's content will live. Each page of your site should exist as a sub directory of `content/`. Each sub directory will consist of either a single `index.md` (or `index.html`) file, or a series of files representing multiple posts of the same content type
+ 
+## Creating New Content
+Ok, at this point we have a functioning Hugo website with a cool theme. We've set the `baseurl` and `publishDir` and given our site a `title` and `description`. Now it's time to start creating content.
+
+`blogdown` lets you easily create new content with the aptly named `new_post()` and `new_content()` functions. These functions will both create a new RMarkdown or markdown file in a sub directory of `content/` that you specify. `new_post()` is essentially just a shortcut for `new_content(path = 'post/')`. 
+
+Let's create a new post, being sure not to include spaces or other special characters in out title.
+```{r, echo=TRUE, eval=FALSE}
+# Create a new post
+new_post(title = 'hello-world.Rmd')
+```
+Again, `blogdown` helps us out by creating and opening the `.Rmd` file for our new post, which it placed in the `content/post/` directory. We could've specified `.md` as the file type if we wanted to use plain markdown. The newly created file has `.yaml` front matter, which includes the `date:`, `draft:`, and `title:` fields. Another thing `blogdown` does is to prepend the date to the file name and title. This is done to assist with [ordering content](http://gohugo.io/content/ordering/), but we can remove the date from the `title:` field as long as we keep the date in the file name and `date:` field. 
+
+```{r echo = FALSE, fig.align = "center", out.width='80%'}
+knitr::include_graphics("../img/new_post.png")
+```
+
+We can now type away like any other RMarkdown document! When the site is rendered with `serve_site()` the new `hello-world` post will be the top entry.
+
+```{r echo = FALSE, fig.align = "center", out.width='100%'}
+knitr::include_graphics("../img/site_serve.png")
+```
+
+## Publishing Your New Site to GitHub
+Unless you're creating this website for your eyes only, you still need to push it to GitHub before the rest of the world can read your tremendous blog entries. Don't worry, GitHub and RStudio have some of the best people, great people, and publishing your new site is easier than, like, anything you've ever seen. 
+
+At this point, you either already have, or recently created, your `<username.github.io>` repository and cloned it to your local machine. You also already told Hugo to publish your site to this same repository using the `publishDir = "<username.github.io"` option in your site's `config.toml` file. There's only a few steps left!
+
+1. Tell Hugo to build your site with `build_site()` (no arguments required). Once Hugo finishes rendering your site, take a look at your `<username>.gihub.io` directory, it should now contain the same files as the `public/` directory of your source content repository.   
+
+2. Open up Terminal, navigate to your `<username>.gihub.io` directory using `cd <path to username.github.io  repo>`. Stage all changed files, commit your changes, and push your new site to GitHub.
+
+That's it! Navigate to your new website `https://<username>.github.io` and check out your hard work!
+
+
