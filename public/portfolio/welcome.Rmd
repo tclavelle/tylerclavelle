@@ -2,7 +2,7 @@
 date: 2017-01-20T18:32:56-08:00
 title: "Welcome"
 author: "Tyler Clavelle"
-showonlyimage: FALSE
+showonlyimage: TRUE
 image: "img/portfolio/TyTy_Diving_Conch.jpg"
 description: "Well, I finally did it. I started a blog."
 ---

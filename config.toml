@@ -1,4 +1,4 @@
-baseurl = "https://friendly-sammet-d07984.netlify.com/"
+baseurl = "https://www.tylerclavelle.com"
 title = "Tyler Clavelle"
 theme = "hugo-creative-portfolio-theme"
 languageCode = "en-us"
@@ -6,13 +6,14 @@ languageCode = "en-us"
 disqusShortname = "tclavelle-github-io"
 # Enable Google Analytics by entering your tracking code
 googleAnalytics = ""
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
   # Style options: default (pink), blue, green, pink, red, sea, violet
   # Use custom.css for your custom styling
   style = "blue"
-  description = "Describe your website"
-  copyright = "&copy;2016 Your name or company"
+  description = "Personal website and blog of Tyler Clavelle"
+  copyright = "&copy;2017 Tyler Clavelle"
   sidebarAbout = [
 "My name is Tyler Clavelle and i'm an environmental data scientist interested in using data analysis and visualization to elucidate the diverse ecological, economic, and social challenges facing our planet.",
 "I work as a Project Researcher for the Sustainable Fisheries Group at the University of California, Santa Barbara."
