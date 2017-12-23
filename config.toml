@@ -39,11 +39,11 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
   [[params.navlinks]]
   name = "About"
-  url = "about/"
+  url = "/about"
 
   [[params.navlinks]]
   name = "Get in touch"
-  url = "contact/"
+  url = "/contact"
 
   [params.social]
   email         = "tyler.clavelle@gmail.com"
