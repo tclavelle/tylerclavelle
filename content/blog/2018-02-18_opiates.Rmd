@@ -1,0 +1,29 @@
+---
+title: "The Opiate Epidemic"
+date: "2018-02-19"
+draft: TRUE
+type: "post"
+image: "img/portfolio/heroin.jpg"
+slug: "opiates"
+description: "Understanding the opiod crisis."
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(warning = F, message = F, error = F, echo = F)
+```
+
+# Opiods in the U.S.
+
+### Overdoses by State
+
+```{r, out.width='50%', fig.align='center'}
+knitr::include_graphics(path = '/img/portfolio/opiate_map.gif')
+```
+
+### Overdoses by gender
+
+```{r}
+knitr::include_graphics(path = '/img/portfolio/opiate_tweenr.gif')
+```
+
+### Who's Prescribing Opiates?

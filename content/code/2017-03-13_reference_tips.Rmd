@@ -1,0 +1,109 @@
+---
+date: 2017-03-13T18:39:07-07:00
+author: "Tyler Clavelle"
+title: "Easy citations in RMarkdown with RefManageR"
+image: "img/portfolio/references_post1.jpg"
+showonlyimage: FALSE
+type: "post"
+slug: "references"
+categories:
+  - "R"
+description: "Make citations and bibliographies (slightly) less painful by combining RMarkdown, the RefManageR R package, and Zotero."
+---
+
+It's Monday (or at least it was when I started writing this), so what better way to make the week's most boring day even more boring than to write about citations? Managing and formatting references for your research is, well, about as fun as it sounds. Fortunately, gone are the days of manually curating these lists and cut/pasting your way to an alphabetical bibliography. In this post, I'll demonstrate how to use the [RefManageR](https://cran.r-project.org/web/packages/RefManageR/RefManageR.pdf) package to manage your references and easily automate citations and bibliographies in RMarkdown documents.
+
+#### Using A Reference Manager
+[Zotero](https://www.zotero.org), [EndNote](http://endnote.com), and [Mendeley](https://www.mendeley.com) are all excellent reference managers, each with their own variety of browser plug-ins and desktop apps that make saving, searching, and inserting references *slightly* more enjoyable. I personally use **Zotero**. I have the Safari plug in that makes it easy to save references directly to my Zotero library from journal websites. The desktop app is a convenient way to browse the references and open up PDFs when needed, and it will also retrieve the metadata for a PDF you add to it, removing the need to enter that info yourself (author, year, journal, etc.).
+
+```{r echo = FALSE, fig.align = "center", out.width='100%'}
+knitr::include_graphics("/img/portfolio/zotero_desktop.png")
+```
+
+All reference manager platforms should allow you to export your bibliography as a variety of file types, which can subsequently be used by RMarkdown (and LaTeX and most word processors) to insert citations and a bibliography in a consistent format. I'll be talking about `.bib` files, which is a style-independent text-based file format (essentially just a formatted list of your references), but the same process should work for other file types.  
+
+Using `.bib` files has numerous advantages:  
+
++ Easily switch between citation formats  
++ Create and update bibliographies automatically
++ Compatible across platforms
++ Easy to share with coauthors 
+
+All of these benefits can take a bit of the sting out of adjusting your paper's citations to the next journal as those rejection letters pile up. Using `.bib` files in RMarkdown documents is really straight forward. Simply save the `.bib` file in your directory of choice and then point to it in the front matter of your RMarkdown document:
+
+```{r bib_demo, echo=T, eval=F}
+---
+title: "Crazy awesome paper that's definitely getting accepted"
+output: html_document
+bibliography: bibliography.bib
+---
+```
+
+#### Citations in RMarkdown
+We're now ready to start inserting citations in our RMarkdown document by placing the reference id within square brackets and using the `@` symbol, e.g, `[@costello16]`. Check out the [RMarkdown documentation](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html) for more information on inserting citations using `.bib` (or other) bibliography files.
+
+#### Citations with RefManageR and Zotero
+A disadvantage to using physical `.bib` files is the need to update the `.bib` file when you want to include new references. Fortunately, the `RefManageR` package makes it easy for us to cut out the middle man. I'll demonstrate how to use `RefManageR` to interface with **Zotero** directly to access our reference list.
+
+First, we'll load the `tidyverse` and `RefManageR` packages. 
+```{r, echo=TRUE, message=F, warning=F}
+# Packages
+library(tidyverse)
+library(RefManageR)
+```
+
+Next, we need two pieces of information, the first of which is a Zotero `user` id. Your Zotero user id can be found by logging in and navigating to `Settings > Feeds / API`. 
+
+```{r echo = FALSE, fig.align = "center", out.width='70%'}
+knitr::include_graphics("/img/portfolio/zotero_id.png")
+```
+
+The second required piece of information is a `collection` id. Collections are another great thing about Zotero, allowing you to easily organize your references for each paper. They appear as sub-folders that you simply drag references to from *My Library* (Zotero will not keep a copy in *My Library*). 
+
+```{r echo = FALSE, fig.align = "center", out.width='100%'}
+knitr::include_graphics("/img/portfolio/zotero_web.png")
+```
+
+For this example, we'll link to my collection of articles about interactions between aquaculture (fish farming) and wild fisheries. The `collection` id is just the last character set after `collectionKey/` at the end of the collection's URL.  
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
+biblio <- ReadZotero(user = 1470307, .params = list(collection = 'R5Z9BXFT'))
+```
+
+With the `user` id and `collection` id, we can connect to Zotero directly to get our reference information using the `ReadZotero()` function. 
+  
+```{r, echo=TRUE, eval=FALSE}
+biblio <- ReadZotero(user = <user_id>, .params = list(collection = '<collection_id>'))
+```
+
+`ReadZotero()` will return a list of references, which I've called `biblio` here. At this point, we can start directly inserting citations in our RMarkdown document using `Cite()` and providing the index for the reference in `biblio` we want to cite. For example, `Cite(biblio[[1]])` will insert a citation for the first reference in our reference list - `r Cite(biblio[[1]])`. 
+
+`ReadZotero()` names each list index using an informative key string and we can make a look-up data frame with the reference titles and list element names to make indexing easier.
+
+```{r}
+# Find article keys to reference when in citations
+refs <- biblio %>% {
+  .$title
+} %>%
+  bind_rows() %>%
+  gather(key = 'key', value = 'title', 1:19)
+```
+
+Now, each time we need to insert a citation we just look up its key in our `refs` data frame and use it with `Cite(biblio['reference_key'])`.
+
+#### Examples 
+> China, Indonesia, India, Chile, Vietnam, and Myanmar are top-10 producers for both capture fisheries and aquaculture `r Cite(biblio['fao_contributing_2016'])`. 
+
+> Aquaculture regulations in numerous regions tend to be reactive, with many newcomers (e.g. Myanmar and Vietnam) promoting economic development at the expense of more restrictive policies like those imposed by incumbents, such as Thailand and the Philippines `r Cite(biblio["hishamunda_commercial_2009"])`. 
+
+> In the absence of effective regulations, producers may adopt unsustainable practices that maximize their short-term profits but cause negative environmental and social damage that they are not held accountable for `r Cite(biblio['subasinghe_global_2009'])`.
+
+Finally, when we're all done writing, inserting a bibliography at the end of our paper is just one line of code using the `PrintBibliography(biblio)` function embedded in a code chunk. Be sure to set the code chunk option `results = 'asis'`.
+
+**References**  
+  
+```{r bibliography, results='asis', echo=FALSE}
+PrintBibliography(biblio)
+```
+
+That's it, we're all setup and ready to start writing and citing our way to publication glory!
