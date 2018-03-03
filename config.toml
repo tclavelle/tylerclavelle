@@ -12,7 +12,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 [permalinks]
   blog = "blog/:year/:slug"
   code = "code/:year/:slug"
-  
   relativeurls = true
 
 [params]
@@ -22,7 +21,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   description = "Personal website and blog of Tyler Clavelle"
   copyright = "&copy;2017 Tyler Clavelle"
   sidebarAbout = [
-"My name is Tyler Clavelle and i'm an environmental data scientist interested in using data analysis and visualization to elucidate the diverse ecological, economic, and social challenges facing our planet.",
+"My name is Tyler Clavelle and i'm an environmental data scientist interested in using data analysis and visualization to explore the diverse ecological, economic, and social challenges facing our planet.",
 "I work as a Project Researcher for the Sustainable Fisheries Group at the University of California, Santa Barbara."
   ]
   # Contact page

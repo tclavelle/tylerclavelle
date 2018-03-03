@@ -4,15 +4,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 
-<title>The Opiate Epidemic - Tyler Clavelle</title>
-<meta property="og:title" content="The Opiate Epidemic - Tyler Clavelle">
+<title>Structured literature reviews using R and Web of Science - Tyler Clavelle</title>
+<meta property="og:title" content="Structured literature reviews using R and Web of Science - Tyler Clavelle">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://amber.rbind.io/img/portfolio/heroin.jpg" >
+<meta name="twitter:image" content="http://amber.rbind.io/" >
   
 
-<meta property="description" content="Understanding the opiod crisis.">
-<meta property="og:description" content="Understanding the opiod crisis.">
+<meta property="description" content="How to conduct a structured literature search in R via the Web of Science API and the R package glue">
+<meta property="og:description" content="How to conduct a structured literature search in R via the Web of Science API and the R package glue">
 
 
 <meta name="twitter:creator" content="">
@@ -138,18 +138,18 @@ ga('send', 'pageview');
             <div class="row">
                   <div class="col-sm-4">
                     <div class="image">
-                      <img src="/img/portfolio/heroin.jpg" class="img-responsive" alt="">
+                      <img src="/" class="img-responsive" alt="">
                     </div>
                   </div>
 
                   <div class="col-md-8">
-                      <h2>The Opiate Epidemic</h2>
+                      <h2>Structured literature reviews using R and Web of Science</h2>
                           <p class="author-category">
-                            
+                            Tyler Clavelle
                           </p>
 
                           <p class="date-comments">
-                          <i class="fa fa-calendar-o"></i> February 19, 2018
+                          <i class="fa fa-calendar-o"></i> September 16, 2017
                           </p>
 
                           
@@ -162,19 +162,83 @@ ga('send', 'pageview');
    <div class="content-column-content">
           <div class="col-lg-8">
 
-<div id="opiods-in-the-u.s." class="section level1">
-<h1>Opiods in the U.S.</h1>
-<div id="overdoses-by-state" class="section level3">
-<h3>Overdoses by State</h3>
-<p><img src="/img/portfolio/opiate_map.gif" width="50%" style="display: block; margin: auto;" /></p>
+<p>For those of us in academia, a lot of time is spent staying up-to-date on the latest scientific literature. Usually this entails sporadic searches on Google Scholar. Sometimes, however, a more thorough and systematic review of the literature is desired.</p>
+<p>This code post will walk through how to conduct structured literature searches using the Web of Science API and the <code>glue</code> R package.</p>
+<pre class="r"><code>### Packages
+library(tidyverse)
+library(stringr)
+library(forcats)
+library(RColorBrewer)</code></pre>
+<pre class="r"><code># devtools::install_github(&quot;juba/rwos&quot;) # run if rwos not already installed
+library(rwos)</code></pre>
+<pre class="r"><code># Primary Keywords
+aqua &lt;- c(&#39;aquaculture&#39;,&#39;mariculture&#39;,&#39;fish farm&#39;)
+fish &lt;- c(&#39;fishery&#39;,&#39;fisheries&#39;)</code></pre>
+<p>We’ll also look for studies that focus on several topics related to aquaculture and capture fisheries, including disease, genetics, and invasive species.</p>
+<pre class="r"><code>disease &lt;- c(&#39;disease&#39;,&#39;disease transmission&#39;,&#39;pathogen&#39;,&#39;parasite&#39;,&#39;sea lice&#39;)
+genetic &lt;- c(&#39;genetic pollution&#39;,&#39;introgression&#39;,&#39;GMO&#39;,&#39;wild fitness&#39;,&#39;escape&#39;)
+invasive &lt;- c(&#39;invasive species&#39;,&#39;resource competition&#39;,&#39;exotic species&#39;)</code></pre>
+<pre class="r"><code># List of all interaction types and keywords
+int_list &lt;- list(&#39;aquaculture&#39; = aqua,
+                 &#39;fishery&#39; = fish)</code></pre>
+<div id="construct-queries" class="section level2">
+<h2>Construct Queries</h2>
+<pre class="r"><code># Use keywords to build structured queries for the WOS search
+
+# Primary query
+prime_q &lt;- paste0(&quot;(TS=(&quot;,primary[1], &quot; OR &quot;, primary[2], &quot; OR &quot;, primary[3],&quot;)&quot;,
+                  &quot; AND (TS=(&quot;, primary[4], &#39; OR &#39;, primary[5], &#39; OR &#39;, primary[6], &#39;))&#39;,
+                  &quot; AND (DT=(Article OR Book))&quot;)
+
+# Function for constructing queries for each interaction
+build_query &lt;- function(int) {
+ paste0(prime_q, &#39; AND (TS=(&#39;, paste(int, collapse = &quot; OR &quot;),&#39;)))&#39;)
+}
+
+# Build all queries
+queries &lt;- lapply(int_list,
+                  FUN = function(x) build_query(int = x))</code></pre>
 </div>
-<div id="overdoses-by-gender" class="section level3">
-<h3>Overdoses by gender</h3>
-<p><img src="/img/portfolio/opiate_tweenr.gif" /><!-- --></p>
+<div id="query-web-of-science" class="section level2">
+<h2>Query Web of Science</h2>
+<pre class="r"><code># Authenticate
+sid &lt;- wos_authenticate()
+
+# Search results for primary keywords
+prime_res &lt;- wos_search(sid, query = paste0(prime_q,&#39;)&#39;)) # 5,600 results
+
+# Search results for all interactions
+all_results &lt;- lapply(queries, FUN = function(x) wos_search(sid, query = x[1]))</code></pre>
+<pre class="r"><code># Retrieve results for primary keywords results
+prime_pub_results &lt;- wos_retrieve(prime_res)
+
+# Retrieve results for all interaction queries
+all_pub_results &lt;- lapply(seq_along(all_results), function(r){
+  results &lt;- all_results[[r]]
+  firsts &lt;- seq(from = 1, to = results[2]$results, by = 100)
+  all_pubs &lt;- lapply(firsts, function(x) {
+    temp &lt;- wos_retrieve(results, first = x)
+  }) %&gt;%
+    bind_rows() %&gt;%
+    mutate(interaction = names(all_results[r]))
+  return(all_pubs)
+}) %&gt;%
+  bind_rows()</code></pre>
 </div>
-<div id="whos-prescribing-opiates" class="section level3">
-<h3>Who’s Prescribing Opiates?</h3>
-</div>
+<div id="summarize-results" class="section level2">
+<h2>Summarize Results</h2>
+<pre class="r"><code># Publications by interaction type over time
+all_pub_results %&gt;%
+  filter(year &lt; 2017) %&gt;%
+  group_by(interaction, year) %&gt;%
+  summarize(pubs = length(unique(uid))) %&gt;%
+  ggplot(aes(x = as.numeric(year), y = pubs, color = fct_reorder(interaction, pubs, sum, .desc = T))) +
+  geom_line() +
+  scale_color_brewer(palette = &#39;Paired&#39;) +
+  labs(x = &#39;Year&#39;,
+       y = &#39;Publications&#39;,
+       color = &#39;Interaction&#39;) +
+  theme_bw()</code></pre>
 </div>
 
       
@@ -194,9 +258,9 @@ ga('send', 'pageview');
          <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'tclavelle-github-io';
-    var disqus_identifier = '\/blog\/2018\/opiates\/';
-    var disqus_title = 'The Opiate Epidemic';
-    var disqus_url = '\/blog\/2018\/opiates\/';
+    var disqus_identifier = '\/code\/2017\/web_of_science\/';
+    var disqus_title = 'Structured literature reviews using R and Web of Science';
+    var disqus_url = '\/code\/2017\/web_of_science\/';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

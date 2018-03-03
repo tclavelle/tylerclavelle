@@ -1,0 +1,124 @@
+---
+date: 2017-09-16T11:17:41-07:00
+draft: true
+author: "Tyler Clavelle"
+title: "Structured literature reviews using R and Web of Science"
+slug: "web_of_science"
+type: "post"
+categories: 
+  - "R"
+description: "How to conduct a structured literature search in R via the Web of Science API and the R package glue"
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(eval = FALSE, warning = F, message = F, error = F)
+```
+
+For those of us in academia, a lot of time is spent staying up-to-date on the latest scientific literature. Usually this entails sporadic searches on Google Scholar. Sometimes, however, a more thorough and systematic review of the literature is desired.  
+
+This code post will walk through how to conduct structured literature searches using the Web of Science API and the `glue` R package.
+
+```{r}
+### Packages
+library(tidyverse)
+library(stringr)
+library(forcats)
+library(RColorBrewer)
+```
+
+
+```{r}
+# devtools::install_github("juba/rwos") # run if rwos not already installed
+library(rwos)
+```
+
+
+```{r}
+# Primary Keywords
+aqua <- c('aquaculture','mariculture','fish farm')
+fish <- c('fishery','fisheries')
+```
+
+We'll also look for studies that focus on several topics related to aquaculture and capture fisheries, including disease, genetics, and invasive species.
+
+```{r}
+disease <- c('disease','disease transmission','pathogen','parasite','sea lice')
+genetic <- c('genetic pollution','introgression','GMO','wild fitness','escape')
+invasive <- c('invasive species','resource competition','exotic species')
+```
+
+```{r}
+# List of all interaction types and keywords
+int_list <- list('aquaculture' = aqua,
+                 'fishery' = fish)
+```
+
+## Construct Queries
+
+```{r}
+
+# Use keywords to build structured queries for the WOS search
+
+# Primary query
+prime_q <- paste0("(TS=(",primary[1], " OR ", primary[2], " OR ", primary[3],")",
+                  " AND (TS=(", primary[4], ' OR ', primary[5], ' OR ', primary[6], '))',
+                  " AND (DT=(Article OR Book))")
+
+# Function for constructing queries for each interaction
+build_query <- function(int) {
+ paste0(prime_q, ' AND (TS=(', paste(int, collapse = " OR "),')))')
+}
+
+# Build all queries
+queries <- lapply(int_list,
+                  FUN = function(x) build_query(int = x))
+```
+
+## Query Web of Science
+
+```{r}
+# Authenticate
+sid <- wos_authenticate()
+
+# Search results for primary keywords
+prime_res <- wos_search(sid, query = paste0(prime_q,')')) # 5,600 results
+
+# Search results for all interactions
+all_results <- lapply(queries, FUN = function(x) wos_search(sid, query = x[1]))
+```
+
+```{r}
+# Retrieve results for primary keywords results
+prime_pub_results <- wos_retrieve(prime_res)
+
+# Retrieve results for all interaction queries
+all_pub_results <- lapply(seq_along(all_results), function(r){
+  results <- all_results[[r]]
+  firsts <- seq(from = 1, to = results[2]$results, by = 100)
+  all_pubs <- lapply(firsts, function(x) {
+    temp <- wos_retrieve(results, first = x)
+  }) %>%
+    bind_rows() %>%
+    mutate(interaction = names(all_results[r]))
+  return(all_pubs)
+}) %>%
+  bind_rows()
+```
+
+## Summarize Results
+
+```{r}
+# Publications by interaction type over time
+all_pub_results %>%
+  filter(year < 2017) %>%
+  group_by(interaction, year) %>%
+  summarize(pubs = length(unique(uid))) %>%
+  ggplot(aes(x = as.numeric(year), y = pubs, color = fct_reorder(interaction, pubs, sum, .desc = T))) +
+  geom_line() +
+  scale_color_brewer(palette = 'Paired') +
+  labs(x = 'Year',
+       y = 'Publications',
+       color = 'Interaction') +
+  theme_bw()
+```
+
