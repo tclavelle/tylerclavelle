@@ -13,7 +13,7 @@
 <meta property="og:title" content="{{ .Title }} - {{ .Site.Title }}">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://amber.rbind.io/{{ .Params.image }}" >
+<meta name="twitter:image" content="https://www.tylerclavelle.com{{ .Params.image }}" >
   
 {{ $defaultDescription := printf "Article posted by %s, on %s" .Params.author (.Date.Format "Monday, January 2nd, 2006") }}
 <meta property="description" content="{{ .Description | default $defaultDescription }}">
@@ -41,7 +41,7 @@
 {{ end }}
 <!-- Custom stylesheet - for your changes -->
 <link href="{{ "css/custom.css" | absURL }}" rel="stylesheet">
-<link rel="shortcut icon" href="{{ "img/site_icon.jpg" | absURL }}">
+<link rel="shortcut icon" href="{{ "img/favicon.png" | absURL }}">
 
 <!-- Adding highlighting -->
 <link rel="stylesheet" href="{{"css/github-gist.css" | absURL}}" rel="stylesheet" id="theme-stylesheet">
