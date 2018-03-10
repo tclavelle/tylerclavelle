@@ -17,13 +17,13 @@ library(gganimate)
 library(tweenr)
 
 # Read in opiate data sets
-opioids <- read_csv(file = 'content/portfolio/data/opioids.csv') # drug types
-docs <- read_csv(file = 'content/portfolio/data/prescriber-info.csv') # prescribers
+opioids <- read_csv(file = 'static/data/opioids.csv') # drug types
+docs <- read_csv(file = 'static/data/prescriber-info.csv') # prescribers
 
 # Overdose deaths
-od_lg <- read_tsv('content/portfolio/data/Underlying Cause of Death, 1999-2016_2.txt') # overall by state
-od_gender <- read_tsv('content/portfolio/data/ods_cdc_wonder_gender_race.txt') # by gender and race
-od_age <- read_tsv('content/portfolio/data/ods_cdc_wonder_age') # by gender age
+od_lg <- read_tsv('static/data/Underlying Cause of Death, 1999-2016_2.txt') # overall by state
+od_gender <- read_tsv('static/data/ods_cdc_wonder_gender_race.txt') # by gender and race
+od_age <- read_tsv('static/data/ods_cdc_wonder_age') # by gender age
 
 # Convert prescriber info into long format
 docs <- docs %>%
@@ -61,7 +61,11 @@ od_gif <- state_overdoses %>%
 
  od_gif <- gganimate(od_gif)
 
- gganimate_save(od_gif, filename = 'content/portfolio/img/opiate_map.gif', saver = 'gif')
+ gganimate_save(od_gif, 
+                filename = 'static/img/portfolio/opiate_map.gif', 
+                saver = 'gif',
+                width = 600,
+                height = 400)
 
 # Summarize deaths by gender
 gender_gif_df <- od_gender %>% 
@@ -98,5 +102,5 @@ gender_gif <- gender_tween %>%
 # render image
 gender_gif_save <- gganimate(gender_gif, interval = 0.05, title_frame = F)
 
-gganimate_save(gender_gif_save, filename = 'content/portfolio/img/opiate_tweenr.gif', 
-               saver = 'gif', fps = 5)
+gganimate_save(gender_gif_save, filename = 'static/img/portfolio/opiate_tweenr.gif', 
+               saver = 'gif', interval = 0.05)
