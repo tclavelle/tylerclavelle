@@ -47,9 +47,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   name = "Blog"
   url = "blog/"
   
-    [[params.navlinks]]
-  name = "Code"
+  [[params.navlinks]]
+  name = "Code Tutorials"
   url = "code/"
+  
+  [[params.navlinks]]
+  name = "Shiny Apps"
+  url = "shiny/"
 
   [[params.navlinks]]
   name = "Get in touch"

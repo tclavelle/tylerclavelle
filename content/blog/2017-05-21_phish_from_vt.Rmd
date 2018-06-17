@@ -109,7 +109,7 @@ p1 <- states %>%
   left_join(state_shows) %>%
   ggplot(aes(x = long, y = lat, group = group, fill = shows, key = venues)) +
   geom_polygon() +
-  scale_fill_viridis() +
+  scale_fill_viridis(direction = -1) +
   theme_bw()
 
 p1
@@ -151,6 +151,7 @@ Not surprisingly, You Enjoy Myself, Phish's pièce de résistance, is also their
 # Get data from phish.in API for song info
 song_res <- GET('http://phish.in/api/v1/songs.json?per_page=10000')
 song_raw <- song_res %>% content %>% .$data
+
 song_counts <- map_df((seq_along(song_raw)), function(x) {
   list(song         = song_raw[[x]]$title,
        song_id      = song_raw[[x]]$id,

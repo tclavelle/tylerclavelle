@@ -145,7 +145,6 @@ If we look at the new response from the GitHub API we see that it looks very sim
 ```{r}
 # List elements
 names(commits)
-
 # Status 
 print(paste0('Status code: ', status_code(commits)))
 ```

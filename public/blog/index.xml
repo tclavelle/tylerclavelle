@@ -2,41 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blog on Tyler Clavelle</title>
-    <link>/blog/</link>
+    <link>https://www.tylerclavelle.com/blog/</link>
     <description>Recent content in Blog on Tyler Clavelle</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2017 Tyler Clavelle</copyright>
-    <lastBuildDate>Mon, 19 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 May 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.tylerclavelle.com/blog/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>The Opiate Epidemic</title>
-      <link>/blog/2018/opiates/</link>
-      <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/2018/opiates/</guid>
-      <description>Opiods in the U.S. Overdoses by State  Overdoses by gender  Who’s Prescribing Opiates?   </description>
-    </item>
     
     <item>
       <title>Phish by the Numbers</title>
-      <link>/blog/2017/phish/</link>
+      <link>https://www.tylerclavelle.com/blog/2017/phish/</link>
       <pubDate>Sun, 21 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2017/phish/</guid>
+      <guid>https://www.tylerclavelle.com/blog/2017/phish/</guid>
       <description>“My geekiness is getting in the way of my nerdiness” - Patton Oswalt
  Phish is a quartet and stalwarts of the modern jam band scene they helped create in the late 80’s. Like their Deadhead contemporaries, Phish fans (phans) have an almost unhealthy obsession with the music, speaking in reverential tones of near mythical versions of songs, like 2015’s Tweezer -&amp;gt; Prince Caspian, while endlessly debating the details (for the record, no, I do not think they went back into Tweezer).</description>
     </item>
     
     <item>
       <title>Welcome</title>
-      <link>/blog/2017/welcome/</link>
+      <link>https://www.tylerclavelle.com/blog/2017/welcome/</link>
       <pubDate>Fri, 20 Jan 2017 18:32:56 -0800</pubDate>
       
-      <guid>/blog/2017/welcome/</guid>
+      <guid>https://www.tylerclavelle.com/blog/2017/welcome/</guid>
       <description>Well, I finally did it. I started a blog.
 I have a variety of reasons for venturing into the blogosphere. First, I like to tell stories. Writing these stories down is a good exercise because, in verbal form, my stories have a tendency to meander off on unforeseen (though completely necessary) tangents. Second, blogs have become a go-to for me when seeking answers to my programming-related questions so I decided to start contributing to this resource base.</description>
     </item>

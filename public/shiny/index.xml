@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shiny on Tyler Clavelle</title>
+    <link>https://www.tylerclavelle.com/shiny/</link>
+    <description>Recent content in Shiny on Tyler Clavelle</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy;2017 Tyler Clavelle</copyright>
+    <lastBuildDate>Tue, 10 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.tylerclavelle.com/shiny/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Phactory</title>
+      <link>https://www.tylerclavelle.com/shiny/phactory/</link>
+      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.tylerclavelle.com/shiny/phactory/</guid>
+      <description>Last year, I combined two of my nerdiest passions to write a data-driven exploration of the band Phish. I spent an embarrassing amount of time working on it, due in large part to the fact that there’s just so much music to explore. Rather than repeating the same process a second time, I decided to leverage the work I’d already done to make something interactive for other phans to enjoy. Turns out I spent an embarrassing amount of time on this as well.</description>
+    </item>
+    
+  </channel>
+</rss>

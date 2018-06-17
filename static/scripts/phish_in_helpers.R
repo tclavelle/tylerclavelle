@@ -1,7 +1,8 @@
 library(tidyverse)
 library(httr)
 library(stringr)
-library(wordcloud2)
+library(ggraph)
+library(tidygraph)
 
 # Get data from phish.in API for song info
 # song_res <- GET('http://phish.in/api/v1/songs.json?per_page=10000')
@@ -69,14 +70,14 @@ venue_info <- function(venue_id) {
   return(venue_df)
 }
 
-venue_ids <- GET(paste0('http://phish.in/api/v1/venues.json?per_page=1000'))
-
-venue_ids %>% content %>% .$data
+# venue_ids <- GET(paste0('http://phish.in/api/v1/venues.json?per_page=1000'))
+# 
+# venue_ids %>% content %>% .$data
 
 # # pull out all performances for every song in top jams
 # top_songs <- lapply(song_counts$song_id[song_counts$song %in% top_jams], song_info) %>%
 #   bind_rows()
-# 
+#
 # # song summary (use to determine which jams to explore)
 # top_song_summary <- top_songs %>%
 #   group_by(song) %>%
@@ -85,10 +86,10 @@ venue_ids %>% content %>% .$data
 #             sd_length  = sd(length, na.rm = T)) %>%
 #   filter(grepl('>', song) == F & is.na(sd_length)==F) %>%
 #   mutate(type_2 = avg_length + sd_length)
-# 
+#
 # # save data for offline work
 # # write_csv(top_songs, path = '../My-code/phishfromvt/www/phish_in.csv')
-# 
+#
 # # plot distributions
 # top_songs %>%
 #   filter(song %in% top_jams) %>%
@@ -101,7 +102,7 @@ venue_ids %>% content %>% .$data
 #              linetype = 2) +
 #   scale_fill_brewer(palette = 'Set1') +
 #   facet_wrap(~song, scales = 'free_y')
-# 
+#
 # # Average length per year lineplot
 # top_songs %>%
 #   filter(song %in% top_jams) %>%
@@ -115,13 +116,13 @@ venue_ids %>% content %>% .$data
 #   complete(year=full_seq(year, period = 1), nesting(song), fill = list(0)) %>%
 #   ungroup() %>%
 #   ggplot(aes(x = year, y = avg_length, group = song)) +
-#   geom_rect(aes(xmin = min(year, na.rm = T), xmax = 2000, 
+#   geom_rect(aes(xmin = min(year, na.rm = T), xmax = 2000,
 #                 ymin = 0, ymax = max(avg_length, na.rm = T)),
 #             fill = 'lightgreen', alpha = 0.2) +
-#   geom_rect(aes(xmin = 2002, xmax = 2004, 
+#   geom_rect(aes(xmin = 2002, xmax = 2004,
 #                 ymin = 0, ymax = max(avg_length, na.rm = T)),
 #             fill = 'orange', alpha = 0.2) +
-#   geom_rect(aes(xmin = 2009, xmax = 2017, 
+#   geom_rect(aes(xmin = 2009, xmax = 2017,
 #                 ymin = 0, ymax = max(avg_length, na.rm = T)),
 #             fill = 'lightblue', alpha = 0.2) +
 #   geom_line() +
@@ -129,43 +130,90 @@ venue_ids %>% content %>% .$data
 #   scale_size_continuous(breaks = c(seq(10,60,by = 10))) +
 #   facet_wrap(~song) +
 #   theme_bw()
-
+# 
 # # Pull out Mike's Groove examples and make word plot of the groove songs
-# ms_groove <- lapply(song_counts$song_id[grepl("Mike's", song_counts$song) | 
+# ms_groove <- lapply(song_counts$song_id[grepl("Mike's", song_counts$song) |
 #                                           grepl('Weekapaug', song_counts$song)], song_info) %>%
 #   bind_rows() %>%
 #   arrange(date, position) %>% # arrange by date and track_id to find the in between songs
-#   group_by(date) %>% 
+#   group_by(date) %>%
 #   complete(track_id = full_seq(track_id, period = 1)) %>% # expand the track ids to add in the ids of the tracks in between
 #   ungroup()
-#   
-# # find the songs in the groove
-# ms_groove_2 <- lapply(ms_groove$track_id[is.na(ms_groove$song)], track_info) %>%
+# 
+# # # find the songs in the groove
+# ms_groove_2 <- lapply(unique(ms_groove$track_id[is.na(ms_groove$song)]), track_info) %>%
 #   bind_rows()
 # 
-# # Pull out groove
+# # # Pull out groove
 # ms_groove_3 <- ms_groove %>%
 #   filter(is.na(song)==F) %>%
 #   bind_rows(ms_groove_2) %>%
 #   arrange(date, track_id) %>%
-#   distinct() %>%
-#   filter(!song %in% c("Mike's Song", "Weekapaug Groove"))
+#   distinct() 
 # 
-# # Fix songs with mike's and paug in the song title  
-# ms_groove_3$song <- gsub(" > Weekapaug Groove", replacement = '', ms_groove_3$song)
-# ms_groove_3$song <- gsub("Mike's Song >", replacement = '', ms_groove_3$song)
-# ms_groove_3$song <- gsub(" I Am Hydrogen", replacement = 'I Am Hydrogen', ms_groove_3$song)
+# # Fix songs with mike's and paug in the song title
+# ms_groove_3$song <- gsub(">.*", replacement = '', ms_groove_3$song)
+# ms_groove_3$song <- gsub("\\(.*\\)", replacement = "", ms_groove_3$song)
+# # returns string w/o leading or trailing whitespace
+# trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+# ms_groove_3$song <- trim(ms_groove_3$song)
 # 
-# ms_groove_wc <- ms_groove_3 %>%
-#   group_by(song) %>%
-#   summarize(freq = length(song)) %>%
-#   ungroup() %>%
-#   rename(word = song) 
-
-# figPath <- system.file("examples/cactus.png",package = "wordcloud2")
-# wordcloud2(subset(ms_groove_wc, freq > 1), color = rep(c('green','darkgreen'),
-#                                      length.out = nrow(ms_groove_wc)),
-#            size = 0.5)
-
-# Phish.net jam charts
-
+# # Pull out songs and create network data frame
+# ms_network <- ms_groove_3 %>% 
+#   group_by(date) %>% 
+#   filter(n_distinct(song) > 1) %>% 
+#   # ungroup() %>% 
+#   select(date, song, position) %>% 
+#   mutate(prev  = lag(song), # create connections to/from songs
+#          after = song) %>% 
+#   filter(!is.na(prev))
+# 
+# # summarize number of times that transition occured
+# ms_network <- ms_network %>% 
+#   group_by(prev, after) %>% 
+#   summarize(times = n())
+# 
+# # Create node list
+# nodes <- ms_network %>% 
+#   select(-times) %>% 
+#   gather() %>% 
+#   select(value) %>% 
+#   distinct() %>% 
+#   tbl_df() %>% 
+#   rename(label = value) %>% 
+#   mutate(id = row_number())
+# 
+# # Join network edge dataframe with nodes
+# ms_network <- ms_network %>% 
+#   left_join(nodes, by = c("prev" = "label")) %>% 
+#   rename(from = id) %>% 
+#   left_join(nodes, by = c("after" = "label")) %>% 
+#   rename(to = id,
+#          weight = times) %>% 
+#   ungroup() %>% 
+#   select(from, to, weight)
+# 
+# # Create network object using tidygraph
+# seques_tidy <- tbl_graph(nodes = nodes, edges = ms_network, directed = TRUE)
+# 
+# seques_tidy %>% 
+#   mutate(weight = centrality_degree(mode = 'in')) %>% 
+#   ggraph(layout = "circle") + 
+#   geom_edge_link(aes(width = weight), alpha = 0.8) +
+#   geom_node_point(aes(size = weight)) +
+#   scale_edge_width(range = c(0.2, 2)) +
+#   theme_graph()
+# 
+# # ms_groove_wc <- ms_groove_3 %>%
+# #   group_by(song) %>%
+# #   summarize(freq = length(song)) %>%
+# #   ungroup() %>%
+# #   rename(word = song)
+# 
+# # figPath <- system.file("examples/cactus.png",package = "wordcloud2")
+# # wordcloud2(subset(ms_groove_wc, freq > 1), color = rep(c('green','darkgreen'),
+# #                                      length.out = nrow(ms_groove_wc)),
+# #            size = 0.5)
+# 
+# # Phish.net jam charts
+# 

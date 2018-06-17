@@ -131,15 +131,6 @@ jam_chart <- function(songid, apikey = api_key) {
   return(jc2)
 }
 
-# # Pull jamcharts for top_jam_ids
-# top_jams_charts <- lapply(top_jam_ids$songid, FUN = jam_chart) %>%
-#   bind_rows() %>%
-#   left_join(top_jam_ids)
-
-# test <- top_songs %>%
-#   filter(song %in% top_jams) %>%
-#   left_join(top_jams_charts)
-
 client_id <- '8ec1c22eb38d4e0b9e10e8b715a5f74e'
 client_secret <- '5636a032ece24f38aad8cbd01b266ec2'
 

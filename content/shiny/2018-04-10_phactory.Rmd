@@ -1,0 +1,37 @@
+---
+title: "The Phactory"
+date: "2018-04-10"
+draft: FALSE
+type: "post"
+image: "img/portfolio/phactory.png"
+slug: "phactory"
+description: "A Shiny app to explore the music and history of the band Phish."
+---
+
+Last year, I combined two of my nerdiest passions to write [a data-driven exploration of the band Phish](https://www.tylerclavelle.com/blog/2017/phish/). I spent an embarrassing amount of time working on it, due in large part to the fact that there's just so much music to explore. Rather than repeating the same process a second time, I decided to leverage the work I'd already done to make something interactive for other phans to enjoy. Turns out I spent an embarrassing amount of time on this as well.
+
+[The Phactory](https://tylerclavelle.shinyapps.io/thePhactory/) is a free Shiny app for exploring the music and history of the band Phish. The app combines data from [phish.net](http://www.phish.net) and [phish.in](https://phish.in) to produce interactive graphs and maps. The goal was to create new data visualizations and I’m incredibly grateful to the phans who created and maintain these amazing resources.
+
+There are three main sections:
+
+1. **Jamcharts:** Interactive charts showing a song’s performance history, recommended jams, and average length. There’s also a table of every recording available on Phish.in with links to each track
+  
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics(path = '/img/portfolio/phactory_jams.png')
+```
+  
+2. **Setlists** - Setlists from phish.net, including a map of the venue location, show rating, and track links
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics(path = '/img/portfolio/phactory_setlists.png')
+```
+  
+3. **Tour map** - Explore a map of the venues Phish has played throughout their career, including Europe and Japan. Filter venues by era, tour, year, or total shows.
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics(path = '/img/portfolio/phactory_map.png')
+```
+
+There’s also a bookmark button that will generate a shareable link to the app in its current state - if you think a certain jamchart/setlist/map is really cool, bookmark it and send it to a friend!
+
+Lastly, this is a constantly evolving project so please share any suggestions, bugs, or favorite parts!

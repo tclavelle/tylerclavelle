@@ -2,79 +2,68 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tyler Clavelle</title>
-    <link>/</link>
+    <link>https://www.tylerclavelle.com/</link>
     <description>Recent content on Tyler Clavelle</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2017 Tyler Clavelle</copyright>
-    <lastBuildDate>Mon, 19 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 10 Apr 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.tylerclavelle.com/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>The Opiate Epidemic</title>
-      <link>/blog/2018/opiates/</link>
-      <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/2018/opiates/</guid>
-      <description>Opiods in the U.S. Overdoses by State  Overdoses by gender  Who’s Prescribing Opiates?   </description>
-    </item>
     
     <item>
-      <title>Structured literature reviews using R and Web of Science</title>
-      <link>/code/2017/web_of_science/</link>
-      <pubDate>Sat, 16 Sep 2017 11:17:41 -0700</pubDate>
+      <title>The Phactory</title>
+      <link>https://www.tylerclavelle.com/shiny/phactory/</link>
+      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>/code/2017/web_of_science/</guid>
-      <description>For those of us in academia, a lot of time is spent staying up-to-date on the latest scientific literature. Usually this entails sporadic searches on Google Scholar. Sometimes, however, a more thorough and systematic review of the literature is desired.
-This code post will walk through how to conduct structured literature searches using the Web of Science API and the glue R package.
-### Packages library(tidyverse) library(stringr) library(forcats) library(RColorBrewer) # devtools::install_github(&amp;quot;juba/rwos&amp;quot;) # run if rwos not already installed library(rwos) # Primary Keywords aqua &amp;lt;- c(&amp;#39;aquaculture&amp;#39;,&amp;#39;mariculture&amp;#39;,&amp;#39;fish farm&amp;#39;) fish &amp;lt;- c(&amp;#39;fishery&amp;#39;,&amp;#39;fisheries&amp;#39;) We’ll also look for studies that focus on several topics related to aquaculture and capture fisheries, including disease, genetics, and invasive species.</description>
+      <guid>https://www.tylerclavelle.com/shiny/phactory/</guid>
+      <description>Last year, I combined two of my nerdiest passions to write a data-driven exploration of the band Phish. I spent an embarrassing amount of time working on it, due in large part to the fact that there’s just so much music to explore. Rather than repeating the same process a second time, I decided to leverage the work I’d already done to make something interactive for other phans to enjoy. Turns out I spent an embarrassing amount of time on this as well.</description>
     </item>
     
     <item>
       <title>Using R to extract data from web APIs</title>
-      <link>/code/2017/randapis/</link>
+      <link>https://www.tylerclavelle.com/code/2017/randapis/</link>
       <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>/code/2017/randapis/</guid>
+      <guid>https://www.tylerclavelle.com/code/2017/randapis/</guid>
       <description>Overview We all know the feeling; You find the perfect data set only to discover it’s held hostage in 30 pages of a PDF formatted by a drunk toddler or in 467.5 Excel worksheets spread across 19 workbooks emailed to you by a guy named Melvin. If you’re lucky, maybe there’s an online data platform where you can query some mythical database and download individual data files…One. At. A. Time. In a perfect world, however, all the data you’re nerdy heart could desire is freely accessible via an Application Programming Interface (API).</description>
     </item>
     
     <item>
       <title>Phish by the Numbers</title>
-      <link>/blog/2017/phish/</link>
+      <link>https://www.tylerclavelle.com/blog/2017/phish/</link>
       <pubDate>Sun, 21 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2017/phish/</guid>
+      <guid>https://www.tylerclavelle.com/blog/2017/phish/</guid>
       <description>“My geekiness is getting in the way of my nerdiness” - Patton Oswalt
  Phish is a quartet and stalwarts of the modern jam band scene they helped create in the late 80’s. Like their Deadhead contemporaries, Phish fans (phans) have an almost unhealthy obsession with the music, speaking in reverential tones of near mythical versions of songs, like 2015’s Tweezer -&amp;gt; Prince Caspian, while endlessly debating the details (for the record, no, I do not think they went back into Tweezer).</description>
     </item>
     
     <item>
       <title>Easy citations in RMarkdown with RefManageR</title>
-      <link>/code/2017/references/</link>
+      <link>https://www.tylerclavelle.com/code/2017/references/</link>
       <pubDate>Mon, 13 Mar 2017 18:39:07 -0700</pubDate>
       
-      <guid>/code/2017/references/</guid>
+      <guid>https://www.tylerclavelle.com/code/2017/references/</guid>
       <description>It’s Monday (or at least it was when I started writing this), so what better way to make the week’s most boring day even more boring than to write about citations? Managing and formatting references for your research is, well, about as fun as it sounds. Fortunately, gone are the days of manually curating these lists and cut/pasting your way to an alphabetical bibliography. In this post, I’ll demonstrate how to use the RefManageR package to manage your references and easily automate citations and bibliographies in RMarkdown documents.</description>
     </item>
     
     <item>
       <title>Building a Blog with Blogdown and GitHub</title>
-      <link>/code/2017/blogdown/</link>
+      <link>https://www.tylerclavelle.com/code/2017/blogdown/</link>
       <pubDate>Mon, 23 Jan 2017 16:17:35 -0800</pubDate>
       
-      <guid>/code/2017/blogdown/</guid>
+      <guid>https://www.tylerclavelle.com/code/2017/blogdown/</guid>
       <description>Why Blog? When I first started learning to code in R, Google was (and still is) my go-to when I had a question. It didn’t take long to realize that this generally brought me to one of two destinations - StackOverflow or [Insert Name]’s blog. So, I created a StackOverflow account and decided to start my own data science blog. However, I didn’t quite know where to start and spent most of 2016 scoping different platforms.</description>
     </item>
     
     <item>
       <title>Welcome</title>
-      <link>/blog/2017/welcome/</link>
+      <link>https://www.tylerclavelle.com/blog/2017/welcome/</link>
       <pubDate>Fri, 20 Jan 2017 18:32:56 -0800</pubDate>
       
-      <guid>/blog/2017/welcome/</guid>
+      <guid>https://www.tylerclavelle.com/blog/2017/welcome/</guid>
       <description>Well, I finally did it. I started a blog.
 I have a variety of reasons for venturing into the blogosphere. First, I like to tell stories. Writing these stories down is a good exercise because, in verbal form, my stories have a tendency to meander off on unforeseen (though completely necessary) tangents. Second, blogs have become a go-to for me when seeking answers to my programming-related questions so I decided to start contributing to this resource base.</description>
     </item>

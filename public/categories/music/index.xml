@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Music on Tyler Clavelle</title>
-    <link>/categories/music/</link>
+    <link>https://www.tylerclavelle.com/categories/music/</link>
     <description>Recent content in Music on Tyler Clavelle</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2017 Tyler Clavelle</copyright>
     <lastBuildDate>Sun, 21 May 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/categories/music/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.tylerclavelle.com/categories/music/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Phish by the Numbers</title>
-      <link>/blog/2017/phish/</link>
+      <link>https://www.tylerclavelle.com/blog/2017/phish/</link>
       <pubDate>Sun, 21 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2017/phish/</guid>
+      <guid>https://www.tylerclavelle.com/blog/2017/phish/</guid>
       <description>“My geekiness is getting in the way of my nerdiness” - Patton Oswalt
  Phish is a quartet and stalwarts of the modern jam band scene they helped create in the late 80’s. Like their Deadhead contemporaries, Phish fans (phans) have an almost unhealthy obsession with the music, speaking in reverential tones of near mythical versions of songs, like 2015’s Tweezer -&amp;gt; Prince Caspian, while endlessly debating the details (for the record, no, I do not think they went back into Tweezer).</description>
     </item>

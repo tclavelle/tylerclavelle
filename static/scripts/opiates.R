@@ -14,6 +14,8 @@ library(RColorBrewer)
 library(plotly)
 library(ggplot2)
 library(gganimate)
+library(ggraph)
+library(igraph)
 library(tweenr)
 
 # Read in opiate data sets
@@ -54,7 +56,7 @@ od_gif <- state_overdoses %>%
   filter(is.na(Year)==F & Year > 2009) %>%
   ggplot(aes(x = long, y = lat, group = group, fill = deaths_per_100k, frame = Year)) +
   geom_polygon() +
-  scale_fill_viridis(option = 'A') +
+  scale_fill_viridis(option = 'A', direction = -1) +
   labs(title = 'Overdose deaths per 100,000 people',
        fill  = 'Deaths') +
   theme_bw()
@@ -104,3 +106,77 @@ gender_gif_save <- gganimate(gender_gif, interval = 0.05, title_frame = F)
 
 gganimate_save(gender_gif_save, filename = 'static/img/portfolio/opiate_tweenr.gif', 
                saver = 'gif', interval = 0.05)
+
+
+# OD Circle Packing Graph ----------------------------------------------------------------
+
+# Graph will have the following hierarchy
+# + All ODs
+#   + Gender ODs
+#     + Age ODs
+#       + Race ODs
+
+edges <- data_frame(from = 'All', to = unique(od_age$Race))
+
+edges <- edges %>% 
+  group_by(to) %>% 
+  mutate(to2 = list(map2_chr(to, unique(od_age$`Five-Year Age Groups Code`), ~paste(.x, .y, sep = '_')))) %>% 
+  unnest() %>% 
+  group_by(to2) %>% 
+  mutate(to3 = list(map2_chr(to2, unique(od_age$Gender), ~paste(.x, .y, sep = '_')))) %>% 
+  unnest() %>% 
+  filter(!grepl('NA', to2) & !grepl('NA', to3))
+
+# Build edge dataframe using series of expand grid calls with unique edge values
+edges_df <- expand.grid(from = 'All', to = unique(edges$to)) %>% 
+  bind_rows(edges %>% 
+              select(to, to2) %>% 
+              rename(from = to,
+                     to   = to2)) %>%
+  bind_rows(edges %>% 
+              select(to2, to3) %>% 
+              rename(from = to2,
+                     to   = to3)) %>% 
+  distinct()
+
+# Build OD dataset by grouping by most complex group first and then mutating less specific values
+edge_ods <- od_age %>% 
+  filter(Year == max(Year, na.rm = T)) %>% 
+  group_by(Gender, `Five-Year Age Groups Code`, Race) %>% 
+  summarize(all_ods = sum(Deaths, na.rm = T)) %>% 
+  mutate(to = paste(Race, `Five-Year Age Groups Code`, Gender, sep = '_')) %>% 
+  ungroup() %>% 
+  select(to, all_ods) %>% 
+  bind_rows(od_age %>% 
+              filter(Year == max(Year, na.rm = T)) %>% 
+              group_by(Race, `Five-Year Age Groups Code`) %>% 
+              summarize(all_ods = sum(Deaths, na.rm = T)) %>% 
+              mutate(to = paste(Race, `Five-Year Age Groups Code`, sep = '_')) %>%
+              ungroup() %>% 
+              select(to, all_ods)) %>%
+  bind_rows(od_age %>% 
+              filter(Year == max(Year, na.rm = T)) %>% 
+              group_by(Race) %>% 
+              summarize(all_ods = sum(Deaths, na.rm = T)) %>% 
+              rename(to = Race) %>% 
+              ungroup() %>% 
+  bind_rows(od_age %>% 
+              filter(Year == max(Year, na.rm = T)) %>% 
+              summarize(all_ods = sum(Deaths, na.rm = T)) %>% 
+              mutate(to = 'All')))
+
+# Left join edge OD data to edges
+edges_graph_df <- edges_df %>% 
+  tbl_df() %>% 
+  left_join(edge_ods) %>% 
+  filter(!is.na(all_ods))
+
+# Make network graph data
+od_graph_edges <- graph_from_data_frame(edges_graph_df)
+
+ggraph(od_graph_edges, layout = 'circlepack') +
+  geom_node_circle(aes(fill = depth)) +
+  scale_fill_viridis() +
+  guides(fill = F) +
+  theme_minimal()
+

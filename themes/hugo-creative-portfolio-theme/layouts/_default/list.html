@@ -12,7 +12,7 @@
          {{end}}
 
          {{if eq .Title "Blog"}}
-         <p class="author-category"> My data-driven musings about music, science, culture, politics, and beer.<br> Actually, mostly music and beer...</p>
+         <p class="author-category"> My data-driven musings about music, science, culture, politics, and beer. Actually, mostly music and beer...</p>
          {{end}}
 
           {{ $paginator := .Paginate (where .Data.Pages "Type" "post") }}
