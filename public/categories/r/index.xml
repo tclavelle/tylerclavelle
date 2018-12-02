@@ -14,10 +14,10 @@
     
     <item>
       <title>Common errors and debugging R code</title>
-      <link>/blog/2018/debug/</link>
+      <link>/code/2018/debug/</link>
       <pubDate>Sat, 01 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/blog/2018/debug/</guid>
+      <guid>/code/2018/debug/</guid>
       <description>“PC load letter! What the fuck does that mean?” - Michael Bolton, Office Space
  If you’ve ever written code, you’ve also probably spent (easily) twice as much time trying to figure out why it doesn’t work. Maybe you forgot a bracket? Maybe you used the wrong file path? Maybe your code runs just fine, except your model now estimates the global population is 90 billion people and you’re seeing some pesky warning message about vectors of different lengths.</description>
     </item>
