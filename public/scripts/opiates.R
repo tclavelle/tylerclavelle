@@ -180,3 +180,13 @@ ggraph(od_graph_edges, layout = 'circlepack') +
   guides(fill = F) +
   theme_minimal()
 
+
+# Doctors & Prescriptions -------------------------------------------------
+
+# Summarize most prescribed opiates
+drug_sums <- docs %>% 
+  inner_join(opioids %>% 
+               rename(drug = `Drug Name`)) %>% 
+  group_by(drug) %>% 
+  summarize(prescriptions = sum(prescriptions, na.rm = T)) %>% 
+  arrange(desc(prescriptions))

@@ -2,50 +2,60 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>R on Tyler Clavelle</title>
-    <link>https://www.tylerclavelle.com/categories/r/</link>
+    <link>/categories/r/</link>
     <description>Recent content in R on Tyler Clavelle</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2017 Tyler Clavelle</copyright>
-    <lastBuildDate>Mon, 05 Jun 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Dec 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://www.tylerclavelle.com/categories/r/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Common errors and debugging R code</title>
+      <link>/blog/2018/debug/</link>
+      <pubDate>Sat, 01 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/debug/</guid>
+      <description>“PC load letter! What the fuck does that mean?” - Michael Bolton, Office Space
+ If you’ve ever written code, you’ve also probably spent (easily) twice as much time trying to figure out why it doesn’t work. Maybe you forgot a bracket? Maybe you used the wrong file path? Maybe your code runs just fine, except your model now estimates the global population is 90 billion people and you’re seeing some pesky warning message about vectors of different lengths.</description>
+    </item>
+    
+    <item>
       <title>Using R to extract data from web APIs</title>
-      <link>https://www.tylerclavelle.com/code/2017/randapis/</link>
+      <link>/code/2017/randapis/</link>
       <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.tylerclavelle.com/code/2017/randapis/</guid>
+      <guid>/code/2017/randapis/</guid>
       <description>Overview We all know the feeling; You find the perfect data set only to discover it’s held hostage in 30 pages of a PDF formatted by a drunk toddler or in 467.5 Excel worksheets spread across 19 workbooks emailed to you by a guy named Melvin. If you’re lucky, maybe there’s an online data platform where you can query some mythical database and download individual data files…One. At. A. Time. In a perfect world, however, all the data you’re nerdy heart could desire is freely accessible via an Application Programming Interface (API).</description>
     </item>
     
     <item>
       <title>Phish by the Numbers</title>
-      <link>https://www.tylerclavelle.com/blog/2017/phish/</link>
+      <link>/blog/2017/phish/</link>
       <pubDate>Sun, 21 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.tylerclavelle.com/blog/2017/phish/</guid>
+      <guid>/blog/2017/phish/</guid>
       <description>“My geekiness is getting in the way of my nerdiness” - Patton Oswalt
  Phish is a quartet and stalwarts of the modern jam band scene they helped create in the late 80’s. Like their Deadhead contemporaries, Phish fans (phans) have an almost unhealthy obsession with the music, speaking in reverential tones of near mythical versions of songs, like 2015’s Tweezer -&amp;gt; Prince Caspian, while endlessly debating the details (for the record, no, I do not think they went back into Tweezer).</description>
     </item>
     
     <item>
       <title>Easy citations in RMarkdown with RefManageR</title>
-      <link>https://www.tylerclavelle.com/code/2017/references/</link>
+      <link>/code/2017/references/</link>
       <pubDate>Mon, 13 Mar 2017 18:39:07 -0700</pubDate>
       
-      <guid>https://www.tylerclavelle.com/code/2017/references/</guid>
+      <guid>/code/2017/references/</guid>
       <description>It’s Monday (or at least it was when I started writing this), so what better way to make the week’s most boring day even more boring than to write about citations? Managing and formatting references for your research is, well, about as fun as it sounds. Fortunately, gone are the days of manually curating these lists and cut/pasting your way to an alphabetical bibliography. In this post, I’ll demonstrate how to use the RefManageR package to manage your references and easily automate citations and bibliographies in RMarkdown documents.</description>
     </item>
     
     <item>
       <title>Building a Blog with Blogdown and GitHub</title>
-      <link>https://www.tylerclavelle.com/code/2017/blogdown/</link>
+      <link>/code/2017/blogdown/</link>
       <pubDate>Mon, 23 Jan 2017 16:17:35 -0800</pubDate>
       
-      <guid>https://www.tylerclavelle.com/code/2017/blogdown/</guid>
+      <guid>/code/2017/blogdown/</guid>
       <description>Why Blog? When I first started learning to code in R, Google was (and still is) my go-to when I had a question. It didn’t take long to realize that this generally brought me to one of two destinations - StackOverflow or [Insert Name]’s blog. So, I created a StackOverflow account and decided to start my own data science blog. However, I didn’t quite know where to start and spent most of 2016 scoping different platforms.</description>
     </item>
     

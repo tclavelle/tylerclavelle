@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Tyler Clavelle</title>
-    <link>https://www.tylerclavelle.com/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on Tyler Clavelle</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2017 Tyler Clavelle</copyright>
     
-	<atom:link href="https://www.tylerclavelle.com/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Music</title>
-      <link>https://www.tylerclavelle.com/categories/music/</link>
+      <link>/categories/music/</link>
       <pubDate>Sun, 21 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.tylerclavelle.com/categories/music/</guid>
+      <guid>/categories/music/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://www.tylerclavelle.com/categories/r/</link>
-      <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
+      <link>/categories/r/</link>
+      <pubDate>Sat, 01 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://www.tylerclavelle.com/categories/r/</guid>
+      <guid>/categories/r/</guid>
       <description></description>
     </item>
     

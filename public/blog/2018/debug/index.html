@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+<title>Common errors and debugging R code - Tyler Clavelle</title>
+<meta property="og:title" content="Common errors and debugging R code - Tyler Clavelle">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.tylerclavelle.comimg/portfolio/debug_logo.png" >
+  
+
+<meta property="description" content="A guide to common errors and debugging strategies in R">
+<meta property="og:description" content="A guide to common errors and debugging strategies in R">
+
+
+<meta name="twitter:creator" content="">
+
+<meta name="description" content="Personal website and blog of Tyler Clavelle">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="twitter:creator" content="">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/owl.carousel.css">
+<link rel="stylesheet" href="/css/owl.theme.css">
+
+
+
+  <link href="/css/style.sea.css" rel="stylesheet" id="theme-stylesheet">
+
+
+<link href="/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<link rel="stylesheet" href="/css/github-gist.css" rel="stylesheet" id="theme-stylesheet">
+
+
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-93040290-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              
+<div id="sidebar" class="col-sb-fixedpos col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <h1 class="sidebar-heading"><a href="/">Tyler Clavelle</a></h1>
+
+    <ul class="sidebar-menu">
+      
+      
+        <li><a href="/about/">About</a></li>
+      
+        <li><a href="/blog/">Blog</a></li>
+      
+        <li><a href="/code/">Code Tutorials</a></li>
+      
+        <li><a href="/shiny/">Shiny Apps</a></li>
+      
+        <li><a href="/contact/">Get in touch</a></li>
+      
+
+       
+
+ 
+
+      
+
+ 
+
+      
+ 
+
+    </ul>
+    <p class="social">
+  
+  
+  
+  <a href="https://twitter.com/tclavL" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  
+  <a href="mailto:tyler.clavelle@gmail.com" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  <a href="https://linkedin.com/in/tyler-clavelle-b9902716" data-animate-hover="pulse">
+    <i class="fa fa-linkedin"></i>
+  </a>
+  
+  
+  
+<a href="https://github.com/tclavelle">
+  <i class="fa fa-github"></i>
+</a>
+
+
+
+
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2017 Tyler Clavelle
+        
+        | Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a>
+
+&amp; ported to Hugo by <a href="https://github.com/kishaningithub">Kishan B</a>
+
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background col-main-fixedpos">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="/">Tyler Clavelle</a></h1>
+</div>
+
+
+            <div class="row">
+                  <div class="col-sm-4">
+                    <div class="image">
+                      <img src="/img/portfolio/debug_logo.png" class="img-responsive" alt="">
+                    </div>
+                  </div>
+
+                  <div class="col-md-8">
+                      <h2>Common errors and debugging R code</h2>
+                          <p class="author-category">
+                            
+                          </p>
+
+                          <p class="date-comments">
+                          <i class="fa fa-calendar-o"></i> December 1, 2018
+                          </p>
+
+                          
+                  
+                      </div>
+                    </div>
+                  </br>
+
+<div class="row">
+   <div class="content-column-content">
+          <div class="col-lg-8">
+
+<blockquote>
+<p>“PC load letter! What the fuck does that mean?” <em>- Michael Bolton, Office Space</em></p>
+</blockquote>
+<p>If you’ve ever written code, you’ve also probably spent (easily) twice as much time trying to figure out why it doesn’t work. Maybe you forgot a bracket? Maybe you used the wrong file path? Maybe your code runs just fine, except your model now estimates the global population is 90 billion people and you’re seeing some pesky warning message about vectors of different lengths. Whatever the reason, you <em>will</em> find yourself searching for the gremlin in your code and hoping it doesn’t take you three full work hours (days?) to solve the problem. This post is designed to provide a broad overview of the concepts, tools, tips, and tricks you can use to track down problems in your <code>R</code> code.</p>
+<div id="general-concepts" class="section level2">
+<h2>General Concepts</h2>
+<p>Before diving into common errors and available debugging tools for R, let’s review a few general programming concepts that are often the culprits behind many errors.</p>
+<div id="working-directory-file-paths" class="section level3">
+<h3>Working Directory &amp; File Paths</h3>
+<p>When working in R, we often need to <em>read</em> in a data set and save subsequent results and figures by <em>writing</em> them to the hard drive. Both of these operations require specifying a file <strong>path</strong>, which refers to a file’s unique location in a file system and can be thought of as the file’s address on your computer. There are two options for specifying a file’s path - the <strong>absolute</strong> and <strong>relative</strong> paths - which differ in whether or not they depend on the current <strong>working directory</strong>. Returning to our address analogy, the working directory refers to the folder (directory) that R considers to be the home address for whatever analysis you’re working on.</p>
+<p>R will look for (and save) files to the working directory folder unless told otherwise. Keeping all your files in a single directory can be messy, however, and so we can tell R to read/write data to/from different folders using absolute or relative paths:</p>
+<ul>
+<li><strong>Absolute or “full” paths</strong> point to the same location, regardless of the current working directory
+<ul>
+<li>e.g., the <code>.Rmd</code> file for this tutorial is located at <code>/Users/Tyler/Desktop/GitHub/tylerclavelle/content/blog/2018-12-01_deBug.Rmd</code> on my computer</li>
+</ul></li>
+<li><strong>Relative paths</strong> point to the file’s location <em>relative</em> to the current working directory
+<ul>
+<li>e.g., because my working directory is <code>/Users/Tyler/Desktop/GitHub/tylerclavelle</code>, the relative path for the same <code>.Rmd</code> file is <code>content/blog/2018-12-01_deBug.Rmd</code></li>
+<li>*Note: RMarkdown files are a special exemption. When knitting <code>.Rmd</code> files, R will use the <strong>location of the <code>.Rmd</code> file</strong> as the working directory</li>
+</ul></li>
+</ul>
+<p>It is generally a good idea to use relative paths for the purposes of making your work reproducible and easy to collaborate on. Consider two users (or even one user with two computers) attempting to collaborate on a GitHub repository they have each cloned to their computers. Absolute paths will not work properly since they will be different for each computer while relative paths will remain valid. This assumes that all users have specified the same working directory, such as <code>deBug/</code> in the above example.</p>
+<p>You can determine your current working directory with <code>getwd()</code> and can tell R to use a different working directory with <code>setwd('path/to/new/working/directory')</code>. To set a default working directory for your R scripts go to <code>RStudio -&gt; Preferences -&gt; General</code>:</p>
+<p><img src="/img/portfolio/set_default_wd.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>You may be tempted to start each R script by specifying the desired working directory with <code>setwd()</code>. <strong>Don’t!</strong> This approach can have the same issues with reproducibility/collaboration as absolute paths and, besides, there’s a better way!</p>
+<div id="rstudio-projects" class="section level4">
+<h4>RStudio Projects</h4>
+<p><a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">RStudio Projects</a> are a built-in way to organize all the files associated with a project. There are a lot of advantages to using R Projects that are beyond the scope of this tutorial, so check out the above link to learn more about badassing your RStudio workflow with projects.</p>
+</div>
+</div>
+<div id="environments" class="section level3">
+<h3>Environments</h3>
+<p>Environments organize a set of name-value <strong>bindings</strong>. A useful analogy is to think of an environment as a contact list for R objects - the environment contains a list of R objects (the “people”) and their associated values (their “phone numbers”). Understanding environments is critical for debugging code because environments determine what objects (variables, data frames, functions, etc.) are visible to a particular line of code. While a detailed explanation of R environments is beyond the scope of this tutorial, Hadley Wickham (who else?) has <a href="http://adv-r.had.co.nz/Environments.html">this great tutorial</a> available for anyone interested.</p>
+<p>For debugging most R errors, the important environments to understand are the <strong>global</strong> environment (<code>globalenv()</code>) - the interactive workspace in which you normally work - and the <strong>current</strong> environment (<code>environment()</code>) - the environment containing whatever code is currently being executed. Understanding the difference between these two becomes particularly necessary when using functions. Every time a function is called, R creates an <strong>execution enviornment</strong> in which to host execution of that function’s code. This environment is a temporary <strong>child</strong> of the global (or parent) environment; it can access objects (bindings) in its parent environment(s) but bindings created within the execution environment will not become visible to the parent environment(s) unless explicitly assigned with the deep assignment arrow, <code>&lt;&lt;-</code>. The regular assignment arrow, <code>&lt;-</code>, always creates a <strong>local</strong> variable in the current environment while <code>&lt;&lt;-</code> either modifies an <em>existing</em> variable in the parent environment or creates one in the global environment. The deep assignment arrow will <em>never</em> create a variable in the current environment.</p>
+<p>Consider the following example, in which a the function <code>foo()</code> is used to modify both a local and global variable:</p>
+<pre class="r"><code># Create global variable
+a &lt;- 1
+
+# foo function
+foo &lt;- function(x) {
+  # create local variable b from global variable a and function argument x
+  a &lt;- a + x
+  print(a)
+}
+
+# Run foo
+foo(4)</code></pre>
+<pre><code>## [1] 5</code></pre>
+<p>Running <code>foo(x)</code> prints a value of <code>5</code>. But if check the value of <code>a</code> outside of the function we see that it is unchanged:</p>
+<pre class="r"><code>print(a)</code></pre>
+<pre><code>## [1] 1</code></pre>
+</div>
+<div id="syntax-vs-semantic-errors" class="section level3">
+<h3>Syntax vs Semantic Errors</h3>
+<p>There are two main types of errors in R code:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Syntax errors</strong> result from invalid code statements that R doesn’t understand. Syntax errors will always result in error messages</li>
+<li><strong>Semantic errors</strong> result from valid code that successfully executes but produces unintended outcomes</li>
+</ol>
+<p>Not surprisingly, syntax errors can be considerably easier to debug than semantic errors since they provide a (sometimes) useful error message and do not suggest an underlying flaw in methodology/logic.</p>
+</div>
+</div>
+<div id="common-errors-warnings" class="section level2">
+<h2>Common Errors &amp; Warnings</h2>
+<p>One thing that R is notorious for is its often cryptic and difficult to decipher error messages. In what can only be described as an act of masochism, Noam Ross investigated the most <a href="https://github.com/noamross/zero-dependency-problems/blob/master/misc/stack-overflow-common-r-errors.md">common errors in R</a> using data from nearly 20,000 Stack Overflow posts. The results showed that a considerable fraction of problems people have can be attributed to the handful of error types outlined below:</p>
+<ol style="list-style-type: decimal">
+<li><code>object not found...</code> The object (variable, data frame, list, function, etc.) being called in the code has not actually been defined:</li>
+</ol>
+<pre class="r"><code># Try printing foo
+print(foo2)</code></pre>
+<pre><code>## Error in print(foo2): object &#39;foo2&#39; not found</code></pre>
+<p>Check spelling and, in the case of objects read from data files, that the file path is correct.</p>
+<hr />
+<ol start="2" style="list-style-type: decimal">
+<li><code>could not find function...</code> The function is spelled wrong or the package it belongs to has not been loaded:</li>
+</ol>
+<pre class="r"><code># Create foo (will fail)
+foo &lt;- data_frame(x = c(1:5), y = letters[1:5])</code></pre>
+<pre><code>## Error in data_frame(x = c(1:5), y = letters[1:5]): could not find function &quot;data_frame&quot;</code></pre>
+<pre class="r"><code># load tidyverse
+library(tidyverse)
+# Create foo after loading package (will work)
+foo &lt;- data_frame(x = c(1:5), y = letters[1:5])</code></pre>
+<hr />
+<ol start="3" style="list-style-type: decimal">
+<li><code>Error in if...</code> The logical statement in your <code>if()</code> statement is not yielding a logical value (<code>TRUE</code>/<code>FALSE</code>)</li>
+</ol>
+<pre class="r"><code>if(foo[6,1] &gt; 4) { print(&#39;woohoo!&#39;)}</code></pre>
+<pre><code>## Error in if (foo[6, 1] &gt; 4) {: missing value where TRUE/FALSE needed</code></pre>
+<hr />
+<ol start="4" style="list-style-type: decimal">
+<li><code>subscript out of bounds</code> Code refers to an index that does not exist:</li>
+</ol>
+<pre class="r"><code># Matrix
+a &lt;- 3
+foo &lt;- matrix(NA, nrow = 2, ncol = 2)
+foo[a,1] &lt;- &#39;wtf&#39;</code></pre>
+<pre><code>## Error in `[&lt;-`(`*tmp*`, a, 1, value = &quot;wtf&quot;): subscript out of bounds</code></pre>
+<p><strong>Note:</strong> This error applies to matrices and lists but <em>NOT</em> data frames or vectors.</p>
+<pre class="r"><code># Make foo2 a dataframe instead of a matrix
+foo &lt;- data.frame(matrix(NA, nrow = 2, ncol = 2))
+# Printing does not give an error, just an NA
+foo[a,1]</code></pre>
+<pre><code>## [1] NA</code></pre>
+<p>This can result in unintended outcomes that go unnoticed, such as accidentally <em>creating</em> the erroneous index in your data frame:</p>
+<pre class="r"><code># Assignment will actually CREATE that index in the data frame or vector
+foo[a,1] &lt;- &#39;wtf&#39;
+foo</code></pre>
+<pre><code>##     X1 X2
+## 1 &lt;NA&gt; NA
+## 2 &lt;NA&gt; NA
+## 3  wtf NA</code></pre>
+<hr />
+<ol start="5" style="list-style-type: decimal">
+<li><code>...cannot open the connection</code> R can’t read/write the file, usually due to an incorrect path:</li>
+</ol>
+<pre class="r"><code>write_csv(foo, path = &#39;the/long/road/to/nowhere.csv&#39;)</code></pre>
+<pre><code>## Warning in open.connection(path, &quot;wb&quot;): cannot open file &#39;the/long/road/to/
+## nowhere.csv&#39;: No such file or directory</code></pre>
+<pre><code>## Error in open.connection(path, &quot;wb&quot;): cannot open the connection</code></pre>
+<hr />
+<ol start="6" style="list-style-type: decimal">
+<li><code>non-numeric argument to binary operator</code> Trying to do math with a non-numeric variable, such as when a data frame column is accidentally a character column:</li>
+</ol>
+<pre class="r"><code>a &lt;- &#39;7&#39;
+6 + a</code></pre>
+<pre><code>## Error in 6 + a: non-numeric argument to binary operator</code></pre>
+<hr />
+<ol start="7" style="list-style-type: decimal">
+<li><code>replacement has...</code> Attempting to assign a vector of values to a subset of an existing object where the lengths are different:</li>
+</ol>
+<pre class="r"><code>foo &lt;- data_frame(n = c(1:5), d = letters[1:5])
+foo$test &lt;- c(1:10)</code></pre>
+<pre><code>## Error in `$&lt;-.data.frame`(`*tmp*`, test, value = 1:10): replacement has 10 rows, data has 5</code></pre>
+<pre class="r"><code># Replacement is longer
+a &lt;- c(30:50)
+foo &lt;- c(1:30)
+foo[1:10] &lt;- a</code></pre>
+<pre><code>## Warning in foo[1:10] &lt;- a: number of items to replace is not a multiple of
+## replacement length</code></pre>
+</div>
+<div id="debugging-tips-tools" class="section level2">
+<h2>Debugging Tips &amp; Tools</h2>
+<p>Time for the (not so) fun stuff - debugging tips and tools. In a nutshell, debugging includes the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Locate the point in the code where the error occurs (syntactic errors) or where you suspect it occurs (semantic errors)</li>
+<li>Stop the code at that point</li>
+<li>Examine the code within the context of the current environment</li>
+</ol>
+<p>R and RStudio provide a handful of useful built-in tools designed to help you locate an error and investigate the environment state at the time of the error in order to figure out what went wrong.</p>
+<div id="print-is-your-best-friend" class="section level3">
+<h3><code>print</code> is your best friend</h3>
+<p>It’s hard to overstate the value of the <code>print</code> function to the debugging process. Using <code>print</code> can help you both locate and diagnose a problem in your code.</p>
+<p>Consider the following example:</p>
+<pre class="r"><code>for (a in 1:length(v1)){
+  b &lt;- 10 / v1[[a]]
+}</code></pre>
+<pre><code>## Error in 10/v1[[a]]: non-numeric argument to binary operator</code></pre>
+<p>There’s an error in our <code>for</code> loop, but we’re not sure where. The simple <code>b &lt;- 10 / a</code> is valid code assuming <code>a</code> is numeric, so we suspect there’s a problem somewhere in <code>v1</code>. If <code>v1</code> is small, a reasonable first step is to just use <code>print(v1)</code> to visually inspect <code>v1</code> for problems.</p>
+<pre class="r"><code>print(v1)</code></pre>
+<pre><code>## [[1]]
+## [1] 1
+## 
+## [[2]]
+## [1] 2
+## 
+## [[3]]
+## [1] &quot;5&quot;
+## 
+## [[4]]
+## [1] 6</code></pre>
+<p>Right away we see the problem - the third element of the <code>v1</code> list is actually a character. However, it’s often impractical to visually inspect entire lists or vectors. In these cases, one option is to use <code>print</code> to figure out which iteration in the <code>for</code> loop is causing the error:</p>
+<pre class="r"><code>for (a in 1:length(v1)){
+  print(a)
+  b &lt;- 10 / v1[[a]]
+}</code></pre>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3</code></pre>
+<pre><code>## Error in 10/v1[[a]]: non-numeric argument to binary operator</code></pre>
+<p>By printing the value of <code>a</code> in each iteration of the <code>for</code> loop, we’ve identified a problem with the third element of our list. We can now use <code>print</code> again to inspect the the suspect value.</p>
+<pre class="r"><code>print(v1[[3]])</code></pre>
+<pre><code>## [1] &quot;5&quot;</code></pre>
+<p>We’ve now used <code>print</code> to both find <em>where</em> the error occurs (the third iteration in our <code>for</code> loop) and <em>why</em> it occurs (the third element of <code>v1</code> was accidentally entered as a character). While the above strategy clearly won’t scale well - imagine if <code>v1</code> contained a million elements - it is useful for demonstrating the utility of <code>print</code> for debugging.</p>
+</div>
+<div id="use-traceback-to-locate-errors" class="section level3">
+<h3>Use <code>traceback</code> to locate errors</h3>
+<p>Before you can fix a bug in your code, you need to find it in the “call stack” - the sequence of R commands that led to the error. Sometimes this is straightforward - the error occurs in the script you’re working on as you build your analysis. However, this gets more complicated when your script get larger and/or your analysis involves multiple scripts. Consider what happens in the following code that relies on the function <code>gizmo</code> that is defined in a separate R script:</p>
+<pre class="r"><code># Load script containing several functions
+source(&#39;../../static/scripts/gremlins.R&#39;)
+
+# Run gizmo
+gizmo(samples = 10)</code></pre>
+<pre><code>## Error in samples * &quot;2&quot;: non-numeric argument to binary operator</code></pre>
+<p>We receive a familiar error message but no information about where in the <code>gizmo()</code> function the error is located other than that it contains the code snippet <code>samples * &quot;2&quot;</code>. We could open <code>gremlins.R</code> and search for the code snippet <code>samples * &quot;2&quot;</code>, but that could be pretty inefficient if <code>gremlins.R</code> is a large script. Enter <code>traceback()</code>, which will print the call stack location of the last uncaught error:</p>
+<pre class="r"><code>traceback()
+# 2: rnorm(n = samples * &quot;2&quot;) at gremlins.R#12
+# 1: gizmo(10)</code></pre>
+<p>Running <code>traceback()</code> tells us the the error occurs at <code>gremlins.R#12</code>, or line 12 in <code>gremlins.R</code>. If you’re working in a RMarkdown document or notebook, the error message generated by the faulty code chunk provides a shortcut for running <code>traceback()</code>.</p>
+<p><img src="/img/portfolio/traceback.tiff" width="80%" style="display: block; margin: auto;" /></p>
+<p>We can now open <code>gremlins.R</code>, navigate to line 12, and figure out what’s causing the error (which hopefully should be obvious at this point!).</p>
+</div>
+<div id="stop-the-code-with-breakpoints-and-browser" class="section level3">
+<h3>Stop the code with breakpoints and <code>browser()</code></h3>
+<p>In our previous example, the <code>gizmo()</code> function is very short and contains only one argument, <code>samples = 10</code>. Still, we can’t simply open <code>gremlins.R</code> and try to edit <code>gizmo()</code> because the <code>samples</code> variable only exists in <code>gizmo()</code>’s execution environment. Resist the temptation to create <code>samples</code> in your global environment! Doing so will likely lead to chaos down the line, especially when dealing with more complicated and/or nested functions. Instead, RStudio provides several handy tools for entering the current environment at any point in your workflow!</p>
+<div id="breakpoints" class="section level4">
+<h4>Breakpoints</h4>
+<p>The easiest way to stop on a given line of code is to create an <strong>editor breakpoint</strong> by clicking to the left of the number in the code editor. The breakpoint will be indicated by a solid red dot (or hollow dot to indicate the function has not yet been created) to the left of the line number</p>
+<p><img src="/img/portfolio/breakpoint.tiff" width="60%" style="display: block; margin: auto;" /></p>
+<p>RStudio will also put a red dot next to the function name in the environment pane to indicate which of your functions currently have breakpoints</p>
+<p><img src="/img/portfolio/breakpoint2.tiff" width="60%" style="display: block; margin: auto;" /></p>
+<p>An advantage to using breakpoints is that they do not require saving or re-sourcing the function to take effect.</p>
+</div>
+<div id="browser" class="section level4">
+<h4>Browser</h4>
+<p>Another way to stop code on a specific line of code is with the <code>browser()</code> function. Unlike breakpoints, you must explicitly add the <code>browser()</code> statement to your code and update the function or script by calling <code>source()</code>. When the function is called, code execution will halt at the <code>browser()</code> statement.</p>
+<p><img src="/img/portfolio/browser.tiff" width="60%" style="display: block; margin: auto;" /></p>
+<p>The advantage of using <code>browser()</code> over a breakpoint is, because <code>browser()</code> is part of the code, you can create <em>conditional</em> breakpoints. A good example of this is when an error occurs in the middle of a <code>for()</code> loop.</p>
+<pre class="r"><code>for(i in 1:10){
+  # run function for working iterations
+  do_something() 
+  # Add conditional browser to examine iteration generating error
+  if(i == 6) { 
+    browser()
+    do_something()
+    }
+}</code></pre>
+</div>
+</div>
+<div id="examine-the-code-in-debug-mode" class="section level3">
+<h3>Examine the code in debug mode</h3>
+<p>Once code execution is halted by a breakpoint or <code>browser()</code>, RStudio will enter debug mode and open the currently executing function.</p>
+<p><img src="/img/portfolio/debug1.tiff" width="80%" style="display: block; margin: auto;" /></p>
+<p>At the same time, your console will now include a new toolbar for executing code and display <code>Browse[1]&gt;</code> instead of the usual <code>&gt;</code> to indicate you are in debug mode.</p>
+<p><img src="/img/portfolio/debug2.tiff" width="80%" style="display: block; margin: auto;" /></p>
+<p>You’re now ready to troubleshoot the error in your code from within the execution environment. Good luck!</p>
+</div>
+</div>
+<div id="helpful-references" class="section level2">
+<h2>Helpful References</h2>
+<ul>
+<li><a href="https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio">Debugging with RStudio</a></li>
+<li><a href="http://adv-r.had.co.nz/Environments.html">Environments in R</a></li>
+</ul>
+</div>
+
+      
+       </div>
+     </div>
+   </div>
+
+
+
+
+
+        <a href="#" class="back-to-top">
+        <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+
+        </a>
+
+         <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'tclavelle-github-io';
+    var disqus_identifier = '\/blog\/2018\/debug\/';
+    var disqus_title = 'Common errors and debugging R code';
+    var disqus_url = '\/blog\/2018\/debug\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+   
+
+          </div>
+      </div>
+  </div>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.cookie.js"> </script>
+<script src="/js/ekko-lightbox.js"></script>
+<script src="/js/jquery.scrollTo.min.js"></script>
+<script src="/js/masonry.pkgd.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/front.js"></script>
+<script src="/js/backtotop.js"></script> 
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+</html>

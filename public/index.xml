@@ -2,70 +2,98 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tyler Clavelle</title>
-    <link>https://www.tylerclavelle.com/</link>
+    <link>/</link>
     <description>Recent content on Tyler Clavelle</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy;2017 Tyler Clavelle</copyright>
-    <lastBuildDate>Tue, 10 Apr 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Dec 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://www.tylerclavelle.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Common errors and debugging R code</title>
+      <link>/blog/2018/debug/</link>
+      <pubDate>Sat, 01 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/debug/</guid>
+      <description>“PC load letter! What the fuck does that mean?” - Michael Bolton, Office Space
+ If you’ve ever written code, you’ve also probably spent (easily) twice as much time trying to figure out why it doesn’t work. Maybe you forgot a bracket? Maybe you used the wrong file path? Maybe your code runs just fine, except your model now estimates the global population is 90 billion people and you’re seeing some pesky warning message about vectors of different lengths.</description>
+    </item>
+    
+    <item>
       <title>The Phactory</title>
-      <link>https://www.tylerclavelle.com/shiny/phactory/</link>
+      <link>/shiny/phactory/</link>
       <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://www.tylerclavelle.com/shiny/phactory/</guid>
+      <guid>/shiny/phactory/</guid>
       <description>Last year, I combined two of my nerdiest passions to write a data-driven exploration of the band Phish. I spent an embarrassing amount of time working on it, due in large part to the fact that there’s just so much music to explore. Rather than repeating the same process a second time, I decided to leverage the work I’d already done to make something interactive for other phans to enjoy. Turns out I spent an embarrassing amount of time on this as well.</description>
     </item>
     
     <item>
+      <title>Five Figures: The Opiate Epidemic</title>
+      <link>/blog/2018/opiates/</link>
+      <pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/2018/opiates/</guid>
+      <description>Opiods in the U.S. Overdoses by State  Overdoses by gender  Who’s Prescribing Opiates?   </description>
+    </item>
+    
+    <item>
       <title>Using R to extract data from web APIs</title>
-      <link>https://www.tylerclavelle.com/code/2017/randapis/</link>
+      <link>/code/2017/randapis/</link>
       <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.tylerclavelle.com/code/2017/randapis/</guid>
+      <guid>/code/2017/randapis/</guid>
       <description>Overview We all know the feeling; You find the perfect data set only to discover it’s held hostage in 30 pages of a PDF formatted by a drunk toddler or in 467.5 Excel worksheets spread across 19 workbooks emailed to you by a guy named Melvin. If you’re lucky, maybe there’s an online data platform where you can query some mythical database and download individual data files…One. At. A. Time. In a perfect world, however, all the data you’re nerdy heart could desire is freely accessible via an Application Programming Interface (API).</description>
     </item>
     
     <item>
       <title>Phish by the Numbers</title>
-      <link>https://www.tylerclavelle.com/blog/2017/phish/</link>
+      <link>/blog/2017/phish/</link>
       <pubDate>Sun, 21 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://www.tylerclavelle.com/blog/2017/phish/</guid>
+      <guid>/blog/2017/phish/</guid>
       <description>“My geekiness is getting in the way of my nerdiness” - Patton Oswalt
  Phish is a quartet and stalwarts of the modern jam band scene they helped create in the late 80’s. Like their Deadhead contemporaries, Phish fans (phans) have an almost unhealthy obsession with the music, speaking in reverential tones of near mythical versions of songs, like 2015’s Tweezer -&amp;gt; Prince Caspian, while endlessly debating the details (for the record, no, I do not think they went back into Tweezer).</description>
     </item>
     
     <item>
       <title>Easy citations in RMarkdown with RefManageR</title>
-      <link>https://www.tylerclavelle.com/code/2017/references/</link>
+      <link>/code/2017/references/</link>
       <pubDate>Mon, 13 Mar 2017 18:39:07 -0700</pubDate>
       
-      <guid>https://www.tylerclavelle.com/code/2017/references/</guid>
+      <guid>/code/2017/references/</guid>
       <description>It’s Monday (or at least it was when I started writing this), so what better way to make the week’s most boring day even more boring than to write about citations? Managing and formatting references for your research is, well, about as fun as it sounds. Fortunately, gone are the days of manually curating these lists and cut/pasting your way to an alphabetical bibliography. In this post, I’ll demonstrate how to use the RefManageR package to manage your references and easily automate citations and bibliographies in RMarkdown documents.</description>
     </item>
     
     <item>
       <title>Building a Blog with Blogdown and GitHub</title>
-      <link>https://www.tylerclavelle.com/code/2017/blogdown/</link>
+      <link>/code/2017/blogdown/</link>
       <pubDate>Mon, 23 Jan 2017 16:17:35 -0800</pubDate>
       
-      <guid>https://www.tylerclavelle.com/code/2017/blogdown/</guid>
+      <guid>/code/2017/blogdown/</guid>
       <description>Why Blog? When I first started learning to code in R, Google was (and still is) my go-to when I had a question. It didn’t take long to realize that this generally brought me to one of two destinations - StackOverflow or [Insert Name]’s blog. So, I created a StackOverflow account and decided to start my own data science blog. However, I didn’t quite know where to start and spent most of 2016 scoping different platforms.</description>
     </item>
     
     <item>
       <title>Welcome</title>
-      <link>https://www.tylerclavelle.com/blog/2017/welcome/</link>
+      <link>/blog/2017/welcome/</link>
       <pubDate>Fri, 20 Jan 2017 18:32:56 -0800</pubDate>
       
-      <guid>https://www.tylerclavelle.com/blog/2017/welcome/</guid>
+      <guid>/blog/2017/welcome/</guid>
       <description>Well, I finally did it. I started a blog.
 I have a variety of reasons for venturing into the blogosphere. First, I like to tell stories. Writing these stories down is a good exercise because, in verbal form, my stories have a tendency to meander off on unforeseen (though completely necessary) tangents. Second, blogs have become a go-to for me when seeking answers to my programming-related questions so I decided to start contributing to this resource base.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/blog/1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/1/</guid>
+      <description>Debugging R Code: Big Game Gremlin Hunting /*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */ !function(a,b){&#34;object&#34;==typeof module&amp;&amp;&#34;object&#34;==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error(&#34;jQuery requires a window with a document&#34;);return b(a)}:b(a)}(&#34;undefined&#34;!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l=&#34;1.11.3&#34;,m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:&#34;&#34;,length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0a?b:0);return this.pushStack(c=0&amp;&amp;bc?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for(&#34;boolean&#34;==typeof g&amp;&amp;(j=g,g=arguments[h]||{},h++),&#34;object&#34;==typeof g||m.isFunction(g)||(g={}),h===i&amp;&amp;(g=this,h--);ih;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&amp;&amp;(j&amp;&amp;c&amp;&amp;(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&amp;&amp;m.isArray(a)?a:[]):f=a&amp;&amp;m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&amp;&amp;(g[d]=c));return g},m.extend({expando:&#34;jQuery&#34;+(l+Math.random()).replace(/\D/g,&#34;&#34;),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return&#34;function&#34;===m.type(a)},isArray:Array.isArray||function(a){return&#34;array&#34;===m.type(a)},isWindow:function(a){return null!=a&amp;&amp;a==a.window},isNumeric:function(a){return!m.isArray(a)&amp;&amp;a-parseFloat(a)+1=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||&#34;object&#34;!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&amp;&amp;!j.call(a,&#34;constructor&#34;)&amp;&amp;!j.call(a.constructor.prototype,&#34;isPrototypeOf&#34;))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.</description>
     </item>
     
   </channel>
